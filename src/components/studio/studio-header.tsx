@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export function StudioHeader() {
   return (
     <header className="studio-header-band studio-header-band--compact relative z-20 shrink-0 px-5 md:px-8">
-      <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between gap-4 py-3">
+      <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between gap-4 py-2">
         <h1 className="studio-hero-title studio-hero-title--compact">
           Lifecycle <span className="studio-hero-gradient">Architecture</span> Stack
         </h1>
@@ -30,7 +30,7 @@ export function TemplateBar({
   onOpenLibrary,
 }: TemplateBarProps) {
   return (
-    <div className="relative z-20 shrink-0 border-b border-[rgba(255,255,255,0.05)] px-5 py-2 md:px-8">
+    <div className="relative z-20 shrink-0 border-b border-[rgba(255,255,255,0.05)] px-5 py-1.5 md:px-8">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3">
         <div className="flex flex-wrap gap-1.5">
           {templates.map((template) => (

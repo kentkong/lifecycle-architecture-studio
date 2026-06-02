@@ -6,7 +6,7 @@
   font-family: var(--font-body), system-ui, sans-serif;
 }
 
-.studio-app h1,
+.studio-app h1.studio-hero-title,
 .studio-app h2,
 .studio-app h3 {
   font-family: var(--font-display), system-ui, sans-serif;
