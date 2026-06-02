@@ -3,6 +3,13 @@
 .studio-app {
   background: var(--background-deep);
   color: var(--foreground);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+.studio-app h1.studio-hero-title,
+.studio-app h2,
+.studio-app h3 {
+  font-family: var(--font-display), system-ui, sans-serif;
 }
 
 .studio-app::before {
@@ -96,7 +103,7 @@
 
 .studio-eyebrow {
   margin-bottom: 1rem;
-  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-family: var(--font-display), system-ui, sans-serif;
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.18em;
@@ -135,11 +142,11 @@
 }
 
 .studio-hero-title {
-  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: clamp(1.875rem, 4vw, 2.75rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   color: #fff;
 }
 
@@ -166,8 +173,8 @@
 }
 
 .studio-section-heading {
-  font-family: var(--font-montserrat), system-ui, sans-serif;
-  font-weight: 600;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 300;
   color: #fff;
 }
 
@@ -177,7 +184,9 @@
   border-radius: 9999px;
   border: 1px solid rgba(45, 212, 191, 0.22);
   background: rgba(5, 10, 20, 0.4);
+  font-family: var(--font-display), system-ui, sans-serif;
   font-size: 0.6875rem;
+  font-weight: 500;
   letter-spacing: 0.06em;
   color: rgba(167, 243, 208, 0.88);
 }
@@ -188,6 +197,7 @@
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(8, 8, 20, 0.5);
+  font-family: var(--font-display), system-ui, sans-serif;
   font-size: 0.75rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.72);
@@ -216,8 +226,9 @@
   background:
     linear-gradient(var(--background-deep), var(--background-deep)) padding-box,
     var(--gradient-neon) border-box;
+  font-family: var(--font-display), system-ui, sans-serif;
   font-size: 0.8125rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #fff;
   transition: box-shadow 0.2s ease, transform 0.15s ease;
 }
@@ -347,7 +358,7 @@
 
 .platform-node__label {
   max-width: 9rem;
-  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-family: var(--font-display), system-ui, sans-serif;
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -377,6 +388,7 @@
 }
 
 .blueprint-section__title {
+  font-family: var(--font-display), system-ui, sans-serif;
   font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.22em;

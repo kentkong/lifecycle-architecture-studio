@@ -8,6 +8,7 @@ type PlatformLayerCardProps = {
   nodeId: string;
   platformId: string;
   name: string;
+  layerLabel: string;
   selected?: boolean;
   onClick?: () => void;
   index?: number;
@@ -17,6 +18,7 @@ export function PlatformLayerCard({
   nodeId,
   platformId,
   name,
+  layerLabel,
   selected,
   onClick,
   index = 0,
@@ -40,8 +42,16 @@ export function PlatformLayerCard({
         } as React.CSSProperties
       }
     >
-      <PlatformLogo platformId={platformId} size="sm" active={selected} tone="blueprint" />
-      <span className="las-platform-row__name">{name}</span>
+      <span className="las-platform-row__text">
+        <span className="las-platform-row__name">{name}</span>
+        <span className="las-platform-row__sep" aria-hidden="true">
+          ·
+        </span>
+        <span className="las-platform-row__layer">{layerLabel}</span>
+      </span>
+      <span className="las-platform-row__logo">
+        <PlatformLogo platformId={platformId} size="sm" active={selected} tone="blueprint" />
+      </span>
     </button>
   );
 }

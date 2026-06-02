@@ -1,17 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { getStackLayerColors } from "@/lib/stack-colors";
 
 export type AppConnectorSpec = {
   id: string;
   layerIndex: number;
-  tone: "blue" | "green";
   selected: boolean;
 };
 
 type ConnectorLine = {
   id: string;
-  tone: "blue" | "green";
+  layerIndex: number;
   selected: boolean;
   path: string;
   length: number;
@@ -23,25 +23,9 @@ type BlueprintConnectorsProps = {
   animationKey: string;
 };
 
-const TONE_COLORS = {
-  blue: {
-    stroke: "rgba(100, 160, 210, 0.28)",
-    strokeSelected: "rgba(125, 190, 235, 0.55)",
-  },
-  green: {
-    stroke: "rgba(90, 180, 165, 0.26)",
-    strokeSelected: "rgba(110, 205, 185, 0.52)",
-  },
-};
-
-function buildPath(x1: number, y1: number, x2: number, y2: number): string {
-  const dx = x2 - x1;
-  const bend = Math.min(Math.abs(dx) * 0.38, 56);
-  const c1x = x1 + bend;
-  const c1y = y1;
-  const c2x = x2 - bend;
-  const c2y = y2;
-  return `M ${x1} ${y1} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${x2} ${y2}`;
+function strokeForLayer(layerIndex: number, selected: boolean): string {
+  const { top } = getStackLayerColors(layerIndex);
+  return selected ? top : `${top}55`;
 }
 
 export function BlueprintConnectors({
@@ -62,26 +46,27 @@ export function BlueprintConnectors({
     const next: ConnectorLine[] = [];
 
     for (const app of apps) {
-      const appEl = container.querySelector<HTMLElement>(`[data-connect-app="${app.id}"]`);
-      const diamond = container.querySelector<HTMLElement>(
-        `[data-connect-diamond="${app.layerIndex}"] .las-iso__svg`,
-      );
-      if (!appEl || !diamond) continue;
+      const row = container.querySelector<HTMLElement>(`[data-connect-app="${app.id}"]`);
+      const logo = row?.querySelector<HTMLElement>(".las-platform-row__logo");
+      const tier = container.querySelector<HTMLElement>(`[data-connect-diamond="${app.layerIndex}"]`);
+      if (!logo || !tier) continue;
 
-      const appRect = appEl.getBoundingClientRect();
-      const diamondRect = diamond.getBoundingClientRect();
+      const logoRect = logo.getBoundingClientRect();
+      const tierRect = tier.getBoundingClientRect();
 
-      const x1 = appRect.right - containerRect.left + 2;
-      const y1 = appRect.top + appRect.height / 2 - containerRect.top;
-      const x2 = diamondRect.left - containerRect.left - 4;
-      const y2 = diamondRect.top + diamondRect.height / 2 - containerRect.top;
+      const x1 = logoRect.right - containerRect.left + 1;
+      const y1 = logoRect.top + logoRect.height / 2 - containerRect.top;
+      const x2 = tierRect.left - containerRect.left - 2;
+      const y2 = y1;
 
-      const path = buildPath(x1, y1, x2, y2);
-      const length = Math.hypot(x2 - x1, y2 - y1) * 1.12;
+      const path = `M ${x1} ${y1} L ${x2} ${y2}`;
+      const length = x2 - x1;
+
+      if (length <= 0) continue;
 
       next.push({
         id: app.id,
-        tone: app.tone,
+        layerIndex: app.layerIndex,
         selected: app.selected,
         path,
         length,
@@ -121,18 +106,16 @@ export function BlueprintConnectors({
       viewBox={`0 0 ${size.width} ${size.height}`}
       aria-hidden="true"
     >
-      {lines.map(({ id, tone, selected, path, length }, index) => {
-        const colors = TONE_COLORS[tone];
-        const stroke = selected ? colors.strokeSelected : colors.stroke;
-        const delay = index * 50 + 180;
+      {lines.map(({ id, layerIndex, selected, path, length }, index) => {
+        const delay = index * 40 + 160;
 
         return (
           <path
             key={`${animationKey}-${id}`}
             d={path}
             fill="none"
-            stroke={stroke}
-            strokeWidth={selected ? 1 : 0.75}
+            stroke={strokeForLayer(layerIndex, selected)}
+            strokeWidth={selected ? 1.25 : 0.85}
             strokeLinecap="round"
             strokeDasharray={`${length} ${length}`}
             className="las-connector__line"
