@@ -85,8 +85,8 @@ export function LifecycleStudio() {
         }}
       />
 
-      <main className="relative z-10 min-h-0 flex-1 px-2 py-1.5 md:px-4 md:py-2">
-        <div className="mx-auto h-full w-full max-w-[1400px]">
+      <main className="relative z-10 min-h-0 flex-1 py-1">
+        <div className="studio-stage h-full">
           <ArchitectureCanvas
             nodes={state.nodes}
             connections={state.connections}
