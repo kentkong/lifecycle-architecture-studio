@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { BlueprintConnectors } from "@/components/studio/blueprint-connectors";
 import { IsometricDiamond } from "@/components/studio/isometric-diamond";
 import { PlatformLayerCard } from "@/components/studio/platform-layer-card";
@@ -39,13 +39,19 @@ export function StackBlueprint({
   }, [nodes, selectedNodeId]);
 
   const appConnectors = useMemo(() => {
-    const items: { id: string; layerIndex: number; selected: boolean }[] = [];
+    const items: {
+      id: string;
+      layerIndex: number;
+      tone: "blue" | "green";
+      selected: boolean;
+    }[] = [];
 
     layerData.forEach(({ nodes: layerNodes }, layerIndex) => {
       layerNodes.forEach((node) => {
         items.push({
           id: node.id,
           layerIndex,
+          tone: layerIndex % 2 === 0 ? "blue" : "green",
           selected: node.id === selectedNodeId,
         });
       });
@@ -63,15 +69,19 @@ export function StackBlueprint({
           animationKey={animationKey}
         />
 
-        {layerData.map(({ layer, nodes: layerNodes, active, lit }, layerIndex) => (
-          <Fragment key={layer.id}>
+        {/* Left — platform logos & info */}
+        <div className="las-blueprint__apps">
+          {layerData.map(({ layer, nodes: layerNodes, active, lit }, layerIndex) => (
             <div
+              key={layer.id}
               className="las-blueprint__band"
-              data-depth={layerIndex}
+              data-connect-band={layerIndex}
               data-active={active || undefined}
               data-lit={lit || undefined}
-              style={{ gridRow: layerIndex + 1, animationDelay: `${layerIndex * 80 + 150}ms` }}
+              data-tone={layerIndex % 2 === 0 ? "blue" : "green"}
+              style={{ animationDelay: `${layerIndex * 80 + 150}ms` }}
             >
+              <h3 className="las-blueprint__layer-title">{layer.label}</h3>
               {layerNodes.length > 0 ? (
                 <div className="las-blueprint__cards">
                   {layerNodes.map((node, index) => {
@@ -83,7 +93,6 @@ export function StackBlueprint({
                         nodeId={node.id}
                         platformId={node.platformId}
                         name={platform.name}
-                        layerLabel={layer.label}
                         selected={selectedNodeId === node.id}
                         onClick={() => onSelectNode(node.id)}
                         index={index}
@@ -92,26 +101,33 @@ export function StackBlueprint({
                   })}
                 </div>
               ) : (
-                <p className="las-blueprint__empty">{layer.label} — No platforms</p>
+                <p className="las-blueprint__empty">No platforms</p>
               )}
             </div>
+          ))}
+        </div>
 
-            <div
-              className="las-blueprint__stack-tier"
-              data-connect-diamond={layerIndex}
-              style={{ gridRow: layerIndex + 1 }}
-            >
-              <IsometricDiamond
-                label={layer.shortLabel}
-                active={lit}
-                index={layerIndex}
-                total={layerData.length}
-                animationKey={animationKey}
-                stacked
-              />
-            </div>
-          </Fragment>
-        ))}
+        {/* Right — overlapping stack */}
+        <div className="las-blueprint__stack">
+          <div className="las-blueprint__stack-inner">
+            {layerData.map(({ layer, lit }, layerIndex) => (
+              <div
+                key={layer.id}
+                className="las-blueprint__stack-tier"
+                data-connect-diamond={layerIndex}
+              >
+                <IsometricDiamond
+                  label={layer.shortLabel}
+                  active={lit}
+                  index={layerIndex}
+                  total={layerData.length}
+                  animationKey={animationKey}
+                  stacked
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
