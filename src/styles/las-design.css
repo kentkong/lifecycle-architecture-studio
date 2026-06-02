@@ -158,15 +158,17 @@
 .studio-app--fit {
   height: 100dvh;
   overflow: hidden;
-  --las-col-apps: minmax(0, 32%);
-  --las-col-runway: minmax(9rem, 1.65fr);
-  --las-col-stack: minmax(0, 46%);
-  --las-stage-pad: clamp(0.75rem, 2vw, 1.25rem);
+  --las-col-apps: minmax(0, 26%);
+  --las-col-runway: minmax(18rem, 4fr);
+  --las-col-stack: minmax(0, 40%);
+  --las-stage-pad: clamp(1rem, 2.5vw, 2rem);
+  --las-logo-slot: 2rem;
+  --las-row-gap: 0.75rem;
 }
 
 .studio-stage {
   width: 100%;
-  max-width: 1400px;
+  max-width: min(1720px, 97vw);
   margin-inline: auto;
   padding-inline: var(--las-stage-pad);
 }
@@ -185,7 +187,26 @@
 
 .studio-stage__stack {
   grid-column: 3;
-  justify-self: end;
+  justify-self: stretch;
+  width: 100%;
+}
+
+/* Matches platform row: text block + logo slot */
+.las-apps-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--las-logo-slot);
+  gap: var(--las-row-gap);
+  align-items: center;
+  min-width: 0;
+}
+
+.las-apps-col__text {
+  min-width: 0;
+}
+
+.las-apps-col__logo-slot {
+  width: var(--las-logo-slot);
+  flex-shrink: 0;
 }
 
 /* ── Blueprint — one screen, stack right ── */
@@ -198,7 +219,7 @@
   height: 100%;
   min-height: 0;
   padding: 0.15rem 0 0;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: linear-gradient(160deg, rgba(8, 11, 20, 0.96) 0%, rgba(4, 6, 12, 0.94) 100%);
   overflow: hidden;
@@ -335,10 +356,10 @@
 
 /* ── Platform rows — name + layer on one line, logo on connector ── */
 .las-platform-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--las-logo-slot);
+  gap: var(--las-row-gap);
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
   width: 100%;
   min-width: 0;
   padding: 0;
@@ -395,6 +416,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: var(--las-logo-slot);
   position: relative;
   z-index: 1;
 }
