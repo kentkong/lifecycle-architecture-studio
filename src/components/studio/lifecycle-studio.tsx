@@ -72,7 +72,7 @@ export function LifecycleStudio() {
   }
 
   return (
-    <div className="studio-app relative min-h-screen overflow-x-hidden">
+    <div className="studio-app studio-app--fit relative flex h-dvh flex-col overflow-hidden">
       <StudioAtmosphere />
       <StudioHeader />
       <TemplateBar
@@ -85,8 +85,8 @@ export function LifecycleStudio() {
         }}
       />
 
-      <main className="relative z-10 px-2 py-3 md:px-6 md:py-5 lg:px-8">
-        <div className="mx-auto w-full max-w-[1600px]">
+      <main className="relative z-10 min-h-0 flex-1 px-3 py-2 md:px-6 md:py-3">
+        <div className="mx-auto h-full w-full max-w-[1400px]">
           <ArchitectureCanvas
             nodes={state.nodes}
             connections={state.connections}
