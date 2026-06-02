@@ -2,25 +2,23 @@
 
 import { cn } from "@/lib/utils";
 
-type GlowVariant = "blue" | "green";
+type ToneVariant = "blue" | "green";
 
 const PALETTES: Record<
-  GlowVariant,
-  { top: string; mid: string; side: string; edge: string; glow: string }
+  ToneVariant,
+  { top: string; mid: string; side: string; edge: string }
 > = {
   blue: {
     top: "#38bdf8",
     mid: "#2563eb",
     side: "#1e40af",
-    edge: "rgba(56,189,248,0.45)",
-    glow: "rgba(56,189,248,0.55)",
+    edge: "rgba(56,189,248,0.22)",
   },
   green: {
     top: "#2dd4bf",
     mid: "#14b8a6",
     side: "#0f766e",
-    edge: "rgba(45,212,191,0.45)",
-    glow: "rgba(45,212,191,0.55)",
+    edge: "rgba(45,212,191,0.2)",
   },
 };
 
@@ -47,9 +45,10 @@ export function IsometricDiamond({
   stacked = false,
 }: IsometricDiamondProps) {
   const uid = `${animationKey}-${index}`;
-  const variant: GlowVariant = index % 2 === 0 ? "blue" : "green";
+  const variant: ToneVariant = index % 2 === 0 ? "blue" : "green";
   const palette = PALETTES[variant];
   const zIndex = total - index;
+  const slabOpacity = active ? 0.52 : 0.32;
 
   return (
     <div
@@ -63,49 +62,39 @@ export function IsometricDiamond({
         animationDelay: `${index * 80}ms`,
         zIndex,
         ["--iso-i" as string]: index,
-        ["--iso-glow" as string]: palette.glow,
       }}
     >
-      <div className="las-iso__glow" aria-hidden="true" />
-
       <svg viewBox="0 0 320 172" className="las-iso__svg" aria-hidden="true">
         <defs>
           <linearGradient id={`top-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={palette.top} stopOpacity="0.42" />
-            <stop offset="55%" stopColor={palette.mid} stopOpacity="0.28" />
-            <stop offset="100%" stopColor={palette.side} stopOpacity="0.18" />
+            <stop offset="0%" stopColor={palette.top} stopOpacity="0.28" />
+            <stop offset="55%" stopColor={palette.mid} stopOpacity="0.18" />
+            <stop offset="100%" stopColor={palette.side} stopOpacity="0.12" />
           </linearGradient>
           <linearGradient id={`left-${uid}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={palette.mid} stopOpacity="0.38" />
-            <stop offset="100%" stopColor={palette.side} stopOpacity="0.28" />
+            <stop offset="0%" stopColor={palette.mid} stopOpacity="0.24" />
+            <stop offset="100%" stopColor={palette.side} stopOpacity="0.16" />
           </linearGradient>
           <linearGradient id={`right-${uid}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={palette.side} stopOpacity="0.32" />
-            <stop offset="100%" stopColor="#0f172a" stopOpacity="0.45" />
+            <stop offset="0%" stopColor={palette.side} stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#0f172a" stopOpacity="0.28" />
           </linearGradient>
-          <filter id={`edge-glow-${uid}`} x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="2.5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
 
-        <g className="las-iso__slab" opacity={active ? 0.88 : 0.72} filter={`url(#edge-glow-${uid})`}>
+        <g className="las-iso__slab" opacity={slabOpacity}>
           <polygon points={LEFT_FACE} fill={`url(#left-${uid})`} />
           <polygon points={RIGHT_FACE} fill={`url(#right-${uid})`} />
           <polygon
             points={TOP}
             fill={`url(#top-${uid})`}
             stroke={palette.edge}
-            strokeWidth="1.25"
+            strokeWidth="1"
           />
           <polygon
             points={TOP_INNER}
             fill="none"
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="0.75"
+            stroke="rgba(255,255,255,0.06)"
+            strokeWidth="0.65"
           />
         </g>
 
@@ -114,8 +103,8 @@ export function IsometricDiamond({
           y="74"
           textAnchor="middle"
           className="las-iso__text"
-          fill="rgba(255,255,255,0.88)"
-          fontSize="11"
+          fill={active ? "rgba(255,255,255,0.72)" : "rgba(255,255,255,0.45)"}
+          fontSize="10"
           fontWeight="600"
           letterSpacing="0.06em"
         >

@@ -177,6 +177,7 @@
 }
 
 .las-blueprint__split {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(260px, 44%);
   height: 100%;
@@ -184,8 +185,29 @@
   align-items: stretch;
 }
 
+.las-blueprint__connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.las-connector__line {
+  stroke-dashoffset: var(--conn-length, 400);
+  animation: las-connector-draw 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes las-connector-draw {
+  to { stroke-dashoffset: 0; }
+}
+
 /* Left — apps & info */
 .las-blueprint__apps {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -245,7 +267,7 @@
 .las-blueprint__cards {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.12rem;
 }
 
 .las-blueprint__empty {
@@ -262,42 +284,13 @@
 /* Right — overlapping stack pinned to edge */
 .las-blueprint__stack {
   position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   min-height: 0;
   height: 100%;
   padding: 0.25rem 0.5rem 0.25rem 0;
-}
-
-.las-blueprint__stack-glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(48px);
-  pointer-events: none;
-  animation: las-glow-breathe 5s ease-in-out infinite;
-}
-
-.las-blueprint__stack-glow--blue {
-  top: 20%;
-  right: 10%;
-  width: 55%;
-  height: 45%;
-  background: rgba(56, 189, 248, 0.12);
-}
-
-.las-blueprint__stack-glow--green {
-  bottom: 18%;
-  right: 5%;
-  width: 50%;
-  height: 40%;
-  background: rgba(45, 212, 191, 0.1);
-  animation-delay: -2.5s;
-}
-
-@keyframes las-glow-breathe {
-  0%, 100% { opacity: 0.45; transform: scale(0.96); }
-  50% { opacity: 0.85; transform: scale(1.04); }
 }
 
 .las-blueprint__stack-inner {
@@ -307,47 +300,19 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 380px;
+  max-width: 260px;
+}
+
+.las-blueprint__stack-tier {
+  width: 100%;
+}
+
+.las-blueprint__stack-tier + .las-blueprint__stack-tier {
+  margin-top: clamp(-62px, -7vh, -46px);
 }
 
 .las-iso--stacked {
   width: 100%;
-  margin-top: clamp(-48px, -5vh, -32px);
-}
-
-.las-iso--stacked:first-child {
-  margin-top: 0;
-}
-
-.las-iso__glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 95%;
-  height: 120%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: las-glow-breathe 4.5s ease-in-out infinite;
-  animation-delay: calc(var(--iso-i, 0) * 0.35s);
-}
-
-.las-iso--blue .las-iso__glow {
-  background: radial-gradient(
-    ellipse 70% 60% at 50% 45%,
-    rgba(56, 189, 248, 0.22) 0%,
-    rgba(37, 99, 235, 0.08) 50%,
-    transparent 72%
-  );
-}
-
-.las-iso--green .las-iso__glow {
-  background: radial-gradient(
-    ellipse 70% 60% at 50% 45%,
-    rgba(45, 212, 191, 0.2) 0%,
-    rgba(20, 184, 166, 0.07) 50%,
-    transparent 72%
-  );
 }
 
 .las-iso--stacked .las-iso__svg {
@@ -355,22 +320,6 @@
   z-index: 1;
   width: 100%;
   max-width: none;
-}
-
-.las-iso--blue.las-iso--lit .las-iso__svg {
-  filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.35)) drop-shadow(0 10px 24px rgba(0, 0, 0, 0.4));
-}
-
-.las-iso--green.las-iso--lit .las-iso__svg {
-  filter: drop-shadow(0 0 14px rgba(45, 212, 191, 0.32)) drop-shadow(0 10px 24px rgba(0, 0, 0, 0.4));
-}
-
-.las-iso--blue .las-iso__svg {
-  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.15)) drop-shadow(0 10px 24px rgba(0, 0, 0, 0.4));
-}
-
-.las-iso--green .las-iso__svg {
-  filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.12)) drop-shadow(0 10px 24px rgba(0, 0, 0, 0.4));
 }
 
 /* ── Isometric diamonds ── */
@@ -386,6 +335,7 @@
   width: 100%;
   height: auto;
   display: block;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.22));
 }
 
 .las-iso__text {
@@ -397,65 +347,53 @@
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ── Platform rows — logo + info on left ── */
-.las-platform-card {
+/* ── Platform rows — minimal logo + name ── */
+.las-platform-row {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: 0.5rem;
   width: 100%;
   min-width: 0;
-  padding: 0.35rem 0.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(15, 23, 42, 0.4);
+  padding: 0.12rem 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
   cursor: pointer;
   opacity: 0;
-  animation: las-card-enter 0.4s ease forwards;
+  animation: las-row-enter 0.35s ease forwards;
   text-align: left;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
-.las-platform-card__info {
-  min-width: 0;
-  flex: 1;
-}
-
-.las-platform-card__name {
-  display: block;
+.las-platform-row__name {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: clamp(0.6875rem, 1.05vh, 0.8125rem);
   font-weight: 500;
-  color: rgba(203, 213, 225, 0.88);
+  color: rgba(203, 213, 225, 0.72);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color 0.2s ease;
 }
 
-.las-platform-card:hover {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(30, 41, 59, 0.5);
+.las-platform-row:hover .las-platform-row__name {
+  color: rgba(226, 232, 240, 0.92);
 }
 
-.las-platform-card--selected {
-  border-color: rgba(56, 189, 248, 0.35);
-  background: rgba(30, 58, 95, 0.35);
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.08);
+.las-platform-row--selected .las-platform-row__name {
+  color: rgba(224, 242, 254, 0.95);
 }
 
-.las-platform-card--selected .las-platform-card__name {
-  color: #e0f2fe;
-}
+.las-platform-row--delay-0 { animation-delay: 0ms; }
+.las-platform-row--delay-1 { animation-delay: 50ms; }
+.las-platform-row--delay-2 { animation-delay: 100ms; }
+.las-platform-row--delay-3 { animation-delay: 150ms; }
+.las-platform-row--delay-4 { animation-delay: 200ms; }
+.las-platform-row--delay-5 { animation-delay: 250ms; }
 
-.las-platform-card--delay-0 { animation-delay: 0ms; }
-.las-platform-card--delay-1 { animation-delay: 70ms; }
-.las-platform-card--delay-2 { animation-delay: 140ms; }
-.las-platform-card--delay-3 { animation-delay: 210ms; }
-.las-platform-card--delay-4 { animation-delay: 280ms; }
-.las-platform-card--delay-5 { animation-delay: 350ms; }
-
-@keyframes las-card-enter {
-  from { opacity: 0; transform: translateY(12px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes las-row-enter {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 /* ── Logos ── */
@@ -483,11 +421,11 @@
 
 .las-logo--active .las-logo__frame {
   border-color: var(--logo-accent, rgba(34, 211, 238, 0.45));
-  box-shadow: 0 0 16px var(--logo-glow, rgba(34, 211, 238, 0.2));
 }
 
 .las-logo--blueprint.las-logo--active .las-logo__frame {
-  animation: las-logo-float 3s ease-in-out infinite;
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: none;
 }
 
 .las-logo__img--invert {
@@ -545,11 +483,11 @@
   }
 
   .las-blueprint__stack-inner {
-    max-width: 260px;
+    max-width: 200px;
   }
 
-  .las-iso--stacked {
-    margin-top: -24px;
+  .las-blueprint__stack-tier + .las-blueprint__stack-tier {
+    margin-top: -36px;
   }
 
   .las-blueprint__apps {
@@ -560,11 +498,8 @@
 @media (prefers-reduced-motion: reduce) {
   .las-iso,
   .las-blueprint__band,
-  .las-platform-card,
-  .las-blueprint__stack-glow,
-  .las-iso__glow,
-  .studio-atmosphere__orb,
-  .las-logo--blueprint.las-logo--active .las-logo__frame {
+  .las-platform-row,
+  .studio-atmosphere__orb {
     animation: none;
     opacity: 1;
     transform: none;

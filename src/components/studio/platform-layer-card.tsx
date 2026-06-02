@@ -5,6 +5,7 @@ import { getPlatformBrand } from "@/lib/platform-brands";
 import { cn } from "@/lib/utils";
 
 type PlatformLayerCardProps = {
+  nodeId: string;
   platformId: string;
   name: string;
   selected?: boolean;
@@ -13,6 +14,7 @@ type PlatformLayerCardProps = {
 };
 
 export function PlatformLayerCard({
+  nodeId,
   platformId,
   name,
   selected,
@@ -25,22 +27,21 @@ export function PlatformLayerCard({
     <button
       type="button"
       onClick={onClick}
+      data-connect-app={nodeId}
       className={cn(
-        "las-platform-card",
-        selected && "las-platform-card--selected",
-        `las-platform-card--delay-${Math.min(index, 5)}`,
+        "las-platform-row",
+        selected && "las-platform-row--selected",
+        `las-platform-row--delay-${Math.min(index, 5)}`,
       )}
       style={
         {
-          "--card-accent": brand.accent,
-          animationDelay: `${index * 60 + 200}ms`,
+          "--row-accent": brand.accent,
+          animationDelay: `${index * 50 + 180}ms`,
         } as React.CSSProperties
       }
     >
       <PlatformLogo platformId={platformId} size="sm" active={selected} tone="blueprint" />
-      <span className="las-platform-card__info">
-        <span className="las-platform-card__name">{name}</span>
-      </span>
+      <span className="las-platform-row__name">{name}</span>
     </button>
   );
 }

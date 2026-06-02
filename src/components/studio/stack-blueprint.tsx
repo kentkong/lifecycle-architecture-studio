@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
+import { BlueprintConnectors } from "@/components/studio/blueprint-connectors";
 import { IsometricDiamond } from "@/components/studio/isometric-diamond";
 import { PlatformLayerCard } from "@/components/studio/platform-layer-card";
 import { getPlatform } from "@/lib/platforms";
@@ -20,6 +21,8 @@ export function StackBlueprint({
   animationKey,
   onSelectNode,
 }: StackBlueprintProps) {
+  const splitRef = useRef<HTMLDivElement>(null);
+
   const layerData = useMemo(() => {
     return stackLayers.map((layer) => {
       const layerNodes = nodes.filter((node) => {
@@ -35,15 +38,44 @@ export function StackBlueprint({
     });
   }, [nodes, selectedNodeId]);
 
+  const appConnectors = useMemo(() => {
+    const items: {
+      id: string;
+      layerIndex: number;
+      tone: "blue" | "green";
+      selected: boolean;
+    }[] = [];
+
+    layerData.forEach(({ nodes: layerNodes }, layerIndex) => {
+      layerNodes.forEach((node) => {
+        items.push({
+          id: node.id,
+          layerIndex,
+          tone: layerIndex % 2 === 0 ? "blue" : "green",
+          selected: node.id === selectedNodeId,
+        });
+      });
+    });
+
+    return items;
+  }, [layerData, selectedNodeId]);
+
   return (
     <div className="las-blueprint las-blueprint--fit" key={animationKey}>
-      <div className="las-blueprint__split">
+      <div className="las-blueprint__split" ref={splitRef}>
+        <BlueprintConnectors
+          apps={appConnectors}
+          containerRef={splitRef}
+          animationKey={animationKey}
+        />
+
         {/* Left — platform logos & info */}
         <div className="las-blueprint__apps">
           {layerData.map(({ layer, nodes: layerNodes, active, lit }, layerIndex) => (
             <div
               key={layer.id}
               className="las-blueprint__band"
+              data-connect-band={layerIndex}
               data-active={active || undefined}
               data-lit={lit || undefined}
               data-tone={layerIndex % 2 === 0 ? "blue" : "green"}
@@ -58,6 +90,7 @@ export function StackBlueprint({
                     return (
                       <PlatformLayerCard
                         key={node.id}
+                        nodeId={node.id}
                         platformId={node.platformId}
                         name={platform.name}
                         selected={selectedNodeId === node.id}
@@ -74,21 +107,24 @@ export function StackBlueprint({
           ))}
         </div>
 
-        {/* Right — overlapping glowing stack */}
+        {/* Right — overlapping stack */}
         <div className="las-blueprint__stack">
-          <div className="las-blueprint__stack-glow las-blueprint__stack-glow--blue" aria-hidden="true" />
-          <div className="las-blueprint__stack-glow las-blueprint__stack-glow--green" aria-hidden="true" />
           <div className="las-blueprint__stack-inner">
             {layerData.map(({ layer, lit }, layerIndex) => (
-              <IsometricDiamond
+              <div
                 key={layer.id}
-                label={layer.shortLabel}
-                active={lit}
-                index={layerIndex}
-                total={layerData.length}
-                animationKey={animationKey}
-                stacked
-              />
+                className="las-blueprint__stack-tier"
+                data-connect-diamond={layerIndex}
+              >
+                <IsometricDiamond
+                  label={layer.shortLabel}
+                  active={lit}
+                  index={layerIndex}
+                  total={layerData.length}
+                  animationKey={animationKey}
+                  stacked
+                />
+              </div>
             ))}
           </div>
         </div>
