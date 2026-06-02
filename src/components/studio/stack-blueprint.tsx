@@ -38,52 +38,46 @@ export function StackBlueprint({
   return (
     <div className="las-blueprint las-blueprint--fit" key={animationKey}>
       <div className="las-blueprint__split">
-        {/* Left — layer bands aligned to stack tiers */}
-        <div className="las-blueprint__left">
+        {/* Left — platform logos & info */}
+        <div className="las-blueprint__apps">
           {layerData.map(({ layer, nodes: layerNodes, active, lit }, layerIndex) => (
             <div
               key={layer.id}
               className="las-blueprint__band"
               data-active={active || undefined}
               data-lit={lit || undefined}
-              style={{ animationDelay: `${layerIndex * 90 + 180}ms` }}
+              data-tone={layerIndex % 2 === 0 ? "blue" : "green"}
+              style={{ animationDelay: `${layerIndex * 80 + 150}ms` }}
             >
-              <div className="las-blueprint__band-inner">
-                <div className="las-blueprint__band-head">
-                  <span className="las-blueprint__band-dot" />
-                  <h3 className="las-blueprint__layer-title">{layer.label}</h3>
+              <h3 className="las-blueprint__layer-title">{layer.label}</h3>
+              {layerNodes.length > 0 ? (
+                <div className="las-blueprint__cards">
+                  {layerNodes.map((node, index) => {
+                    const platform = getPlatform(node.platformId);
+                    if (!platform) return null;
+                    return (
+                      <PlatformLayerCard
+                        key={node.id}
+                        platformId={node.platformId}
+                        name={platform.name}
+                        selected={selectedNodeId === node.id}
+                        onClick={() => onSelectNode(node.id)}
+                        index={index}
+                      />
+                    );
+                  })}
                 </div>
-                {layerNodes.length > 0 ? (
-                  <div className="las-blueprint__cards">
-                    {layerNodes.map((node, index) => {
-                      const platform = getPlatform(node.platformId);
-                      if (!platform) return null;
-                      return (
-                        <PlatformLayerCard
-                          key={node.id}
-                          platformId={node.platformId}
-                          name={platform.name}
-                          selected={selectedNodeId === node.id}
-                          onClick={() => onSelectNode(node.id)}
-                          index={index}
-                        />
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <p className="las-blueprint__empty">—</p>
-                )}
-              </div>
-              <div
-                className="las-blueprint__connector"
-                style={{ animationDelay: `${layerIndex * 90 + 120}ms` }}
-              />
+              ) : (
+                <p className="las-blueprint__empty">No platforms</p>
+              )}
             </div>
           ))}
         </div>
 
-        {/* Right — overlapping isometric stack (reference layout) */}
+        {/* Right — overlapping glowing stack */}
         <div className="las-blueprint__stack">
+          <div className="las-blueprint__stack-glow las-blueprint__stack-glow--blue" aria-hidden="true" />
+          <div className="las-blueprint__stack-glow las-blueprint__stack-glow--green" aria-hidden="true" />
           <div className="las-blueprint__stack-inner">
             {layerData.map(({ layer, lit }, layerIndex) => (
               <IsometricDiamond

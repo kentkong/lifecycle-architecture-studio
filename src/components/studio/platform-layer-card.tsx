@@ -33,16 +33,14 @@ export function PlatformLayerCard({
       style={
         {
           "--card-accent": brand.accent,
-          "--card-glow": brand.glow,
-          animationDelay: `${index * 70 + 360}ms`,
+          animationDelay: `${index * 60 + 200}ms`,
         } as React.CSSProperties
       }
     >
-      <span className="las-platform-card__sheen" aria-hidden="true" />
-      <span className="las-platform-card__logo-wrap">
-        <PlatformLogo platformId={platformId} size="sm" active={selected} tone="blueprint" />
+      <PlatformLogo platformId={platformId} size="sm" active={selected} tone="blueprint" />
+      <span className="las-platform-card__info">
+        <span className="las-platform-card__name">{name}</span>
       </span>
-      <span className="las-platform-card__name">{name}</span>
     </button>
   );
 }
