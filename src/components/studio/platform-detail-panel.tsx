@@ -1,11 +1,10 @@
 "use client";
 
 import { X, Plus, Trash2 } from "lucide-react";
-import { PlatformIconMarker, platformIconMap } from "@/components/studio/platform-icons";
+import { PlatformLogo } from "@/components/studio/platform-logo";
 import { getPlatform, platformList } from "@/lib/platforms";
 import { cn } from "@/lib/utils";
 import type { Platform } from "@/lib/types";
-import { Cloud } from "lucide-react";
 
 type PlatformDetailPanelProps = {
   platform: Platform | null;
@@ -45,14 +44,8 @@ export function PlatformDetailPanel({
 
       {platform ? (
         <div className="flex-1 overflow-y-auto px-6 py-6">
-          <div className="mb-6 flex justify-center">
-            <PlatformIconMarker
-              platformId={platform.id}
-              category={platform.category}
-              name={platform.name}
-              selected
-              inline
-            />
+          <div className="las-detail-logo-wrap">
+            <PlatformLogo platformId={platform.id} size="xl" active variant="wordmark" />
           </div>
           <Section title="Purpose">{platform.purpose}</Section>
           <Section title="Key capabilities">
@@ -105,28 +98,23 @@ export function PlatformDetailPanel({
                   All available platforms are already in this architecture.
                 </p>
               ) : (
-                availableToAdd.map((item) => {
-                  const Icon = platformIconMap[item.id] ?? Cloud;
-                  return (
+                availableToAdd.map((item) => (
                     <button
                       key={item.id}
                       type="button"
                       onClick={() => onAddPlatform(item.id)}
                       className="studio-add-platform-btn"
                     >
-                      <span className="platform-icon-marker platform-icon-marker--compact">
-                        <Icon className="h-4 w-4 text-[#67e8f9]" strokeWidth={1.75} />
-                      </span>
+                      <PlatformLogo platformId={item.id} size="sm" />
                       <span className="min-w-0 flex-1 text-left">
                         <span className="block text-sm font-medium text-white">{item.name}</span>
                         <span className="mt-0.5 block text-xs text-[var(--foreground-muted)]">
                           {item.bestFor}
                         </span>
                       </span>
-                      <Plus className="h-4 w-4 text-[#5eead4]" />
+                      <Plus className="h-4 w-4 text-[#93c5fd]" />
                     </button>
-                  );
-                })
+                  ))
               )}
             </div>
           </Section>

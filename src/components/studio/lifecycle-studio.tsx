@@ -8,12 +8,13 @@ import {
   PlatformDetailPanel,
 } from "@/components/studio/platform-detail-panel";
 import { StudioHeader, TemplateBar } from "@/components/studio/studio-header";
-import { DesignAtmosphere } from "@/components/ui/design-atmosphere";
+import { StudioAtmosphere } from "@/components/ui/studio-atmosphere";
 import { architectureTemplates, buildLinearArchitecture, createStateFromTemplate } from "@/lib/templates";
 
 export function LifecycleStudio() {
   const [state, setState] = useState(() => createStateFromTemplate("enterprise-marketing"));
   const [panelOpen, setPanelOpen] = useState(false);
+  const [animationKey, setAnimationKey] = useState("enterprise-marketing");
 
   const selectedPlatform = getSelectedPlatform(state.selectedNodeId);
   const currentPlatformIds = state.nodes.map((node) => node.platformId);
@@ -22,10 +23,9 @@ export function LifecycleStudio() {
     [currentPlatformIds],
   );
 
-  const activeTemplate = architectureTemplates.find((template) => template.id === state.templateId);
-
   function selectTemplate(templateId: string) {
     setState(createStateFromTemplate(templateId));
+    setAnimationKey(templateId);
     setPanelOpen(false);
   }
 
@@ -45,6 +45,7 @@ export function LifecycleStudio() {
     const nextIds = [...currentPlatformIds];
     nextIds.splice(insertIndex, 0, platformId);
     const { nodes, connections } = buildLinearArchitecture(nextIds);
+    setAnimationKey(`custom-${Date.now()}`);
     setState((current) => ({
       ...current,
       templateId: "custom",
@@ -59,6 +60,7 @@ export function LifecycleStudio() {
     if (!state.selectedNodeId || state.selectedNodeId === "customer") return;
     const nextIds = currentPlatformIds.filter((id) => id !== state.selectedNodeId);
     const { nodes, connections } = buildLinearArchitecture(nextIds);
+    setAnimationKey(`custom-${Date.now()}`);
     setState((current) => ({
       ...current,
       templateId: "custom",
@@ -71,7 +73,7 @@ export function LifecycleStudio() {
 
   return (
     <div className="studio-app relative min-h-screen overflow-x-hidden">
-      <DesignAtmosphere />
+      <StudioAtmosphere />
       <StudioHeader />
       <TemplateBar
         templates={architectureTemplates}
@@ -83,17 +85,13 @@ export function LifecycleStudio() {
         }}
       />
 
-      <main className="relative z-10 px-6 py-8 md:px-10">
-        <div className="mx-auto max-w-[1400px]">
-          <p className="studio-section-lead mb-8 max-w-3xl">
-            {activeTemplate
-              ? activeTemplate.description
-              : "Custom architecture — explore, add, or remove platforms to model your stack."}
-          </p>
+      <main className="relative z-10 px-6 py-6 md:px-10 md:py-8">
+        <div className="mx-auto max-w-[1200px]">
           <ArchitectureCanvas
             nodes={state.nodes}
             connections={state.connections}
             selectedNodeId={state.selectedNodeId}
+            animationKey={animationKey}
             onSelectNode={selectNode}
           />
         </div>
