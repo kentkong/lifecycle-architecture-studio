@@ -24,9 +24,9 @@ export function ConnectionLines({
     >
       <defs>
         <linearGradient id="flow-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="rgba(96,165,250,0.05)" />
-          <stop offset="50%" stopColor="rgba(96,165,250,0.55)" />
-          <stop offset="100%" stopColor="rgba(96,165,250,0.05)" />
+          <stop offset="0%" stopColor="rgba(45,212,191,0.05)" />
+          <stop offset="50%" stopColor="rgba(0,229,255,0.55)" />
+          <stop offset="100%" stopColor="rgba(124,58,237,0.35)" />
         </linearGradient>
       </defs>
       {connections.map((connection) => {
@@ -35,9 +35,9 @@ export function ConnectionLines({
         if (!from || !to) return null;
 
         const startX = from.x;
-        const startY = from.y + 36;
+        const startY = from.y + 28;
         const endX = to.x;
-        const endY = to.y - 36;
+        const endY = to.y - 28;
         const midY = (startY + endY) / 2;
 
         return (

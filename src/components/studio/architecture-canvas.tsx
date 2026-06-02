@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { ConnectionLines } from "@/components/studio/connection-lines";
-import { PlatformNode } from "@/components/studio/platform-node";
+import { PlatformIconMarker } from "@/components/studio/platform-icons";
 import { getPlatform } from "@/lib/platforms";
 import type { StudioConnection, StudioNode } from "@/lib/types";
 
@@ -14,9 +14,9 @@ type ArchitectureCanvasProps = {
 };
 
 const CANVAS_WIDTH = 960;
-const CANVAS_HEIGHT = 920;
-const TOP_PADDING = 80;
-const BOTTOM_PADDING = 80;
+const CANVAS_HEIGHT = 880;
+const TOP_PADDING = 64;
+const BOTTOM_PADDING = 64;
 
 export function ArchitectureCanvas({
   nodes,
@@ -40,32 +40,34 @@ export function ArchitectureCanvas({
   }, [nodes]);
 
   return (
-    <div className="relative mx-auto h-[min(920px,calc(100vh-220px))] w-full max-w-[960px]">
-      <div className="canvas-grid absolute inset-0 rounded-[28px] border border-white/6 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.08),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent_30%)]" />
-      <div className="relative h-full w-full">
-        <ConnectionLines
-          connections={connections}
-          nodePositions={nodePositions}
-          width={CANVAS_WIDTH}
-          height={CANVAS_HEIGHT}
-        />
-        {nodes.map((node) => {
-          const platform = getPlatform(node.platformId);
-          if (!platform) return null;
-          const position = nodePositions[node.id];
-          return (
-            <PlatformNode
-              key={node.id}
-              name={platform.name}
-              category={platform.category}
-              selected={selectedNodeId === node.id}
-              onClick={() => onSelectNode(node.id)}
-              style={{
-                top: `${(position.y / CANVAS_HEIGHT) * 100}%`,
-              }}
-            />
-          );
-        })}
+    <div className="architecture-canvas-shell">
+      <div className="relative mx-auto h-[min(880px,calc(100vh-240px))] w-full max-w-[960px]">
+        <div className="architecture-canvas-grid absolute inset-0">
+          <ConnectionLines
+            connections={connections}
+            nodePositions={nodePositions}
+            width={CANVAS_WIDTH}
+            height={CANVAS_HEIGHT}
+          />
+          {nodes.map((node) => {
+            const platform = getPlatform(node.platformId);
+            if (!platform) return null;
+            const position = nodePositions[node.id];
+            return (
+              <PlatformIconMarker
+                key={node.id}
+                platformId={node.platformId}
+                name={platform.name}
+                category={platform.category}
+                selected={selectedNodeId === node.id}
+                onClick={() => onSelectNode(node.id)}
+                style={{
+                  top: `${(position.y / CANVAS_HEIGHT) * 100}%`,
+                }}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

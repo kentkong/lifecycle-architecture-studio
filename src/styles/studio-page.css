@@ -1,0 +1,450 @@
+/* SprintIQ-inspired studio design tokens — Lifecycle Architecture Studio */
+
+.studio-app {
+  background: var(--background-deep);
+  color: var(--foreground);
+}
+
+.studio-app::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 50%, rgba(45, 212, 191, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 75% 65% at 88% 40%, rgba(124, 58, 237, 0.1) 0%, transparent 55%);
+}
+
+/* Atmosphere */
+.design-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.design-atmosphere__fade {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.design-atmosphere__fade--teal-left {
+  top: 5%;
+  left: -30%;
+  width: 90%;
+  height: 85%;
+  filter: blur(100px);
+  background: radial-gradient(
+    ellipse 55% 60% at 42% 48%,
+    rgba(45, 212, 191, 0.72) 0%,
+    rgba(45, 212, 191, 0.38) 28%,
+    transparent 72%
+  );
+}
+
+.design-atmosphere__fade--purple-right {
+  top: -5%;
+  right: -28%;
+  width: 88%;
+  height: 90%;
+  filter: blur(110px);
+  background: radial-gradient(
+    ellipse 58% 62% at 58% 45%,
+    rgba(124, 58, 237, 0.78) 0%,
+    rgba(124, 58, 237, 0.42) 30%,
+    transparent 74%
+  );
+}
+
+.design-atmosphere__fade--magenta-mid {
+  top: 35%;
+  right: -10%;
+  width: 65%;
+  height: 60%;
+  filter: blur(95px);
+  background: radial-gradient(
+    circle at 60% 50%,
+    rgba(224, 64, 251, 0.55) 0%,
+    rgba(224, 64, 251, 0.22) 38%,
+    transparent 68%
+  );
+}
+
+.design-atmosphere__fade--cyan-accent {
+  bottom: -15%;
+  right: 5%;
+  width: 55%;
+  height: 55%;
+  filter: blur(90px);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(0, 229, 255, 0.45) 0%,
+    rgba(0, 229, 255, 0.15) 40%,
+    transparent 70%
+  );
+}
+
+/* Header */
+.studio-header-band {
+  border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+  background: rgba(5, 10, 20, 0.35);
+  backdrop-filter: blur(20px);
+}
+
+.studio-eyebrow {
+  margin-bottom: 1rem;
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(94, 234, 212, 0.9);
+}
+
+.studio-eyebrow--underlined {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.85em;
+  padding-bottom: 0.7rem;
+  position: relative;
+  text-shadow: 0 0 14px rgba(45, 212, 191, 0.45);
+}
+
+.studio-eyebrow__word {
+  letter-spacing: 0.38em;
+}
+
+.studio-eyebrow--underlined::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(100%, 11rem);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(45, 212, 191, 0.4) 18%,
+    rgba(45, 212, 191, 0.75) 50%,
+    rgba(45, 212, 191, 0.4) 82%,
+    transparent
+  );
+}
+
+.studio-hero-title {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+
+.studio-hero-gradient {
+  background: var(--gradient-neon);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.studio-hero-lead,
+.studio-section-lead {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--foreground-soft);
+}
+
+.studio-section-eyebrow {
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(167, 243, 208, 0.75);
+}
+
+.studio-section-heading {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-weight: 600;
+  color: #fff;
+}
+
+.studio-badge {
+  align-items: center;
+  padding: 0.35rem 0.875rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(45, 212, 191, 0.22);
+  background: rgba(5, 10, 20, 0.4);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  color: rgba(167, 243, 208, 0.88);
+}
+
+/* Buttons & pills */
+.studio-example-pill {
+  padding: 0.3125rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(8, 8, 20, 0.5);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.72);
+  transition: all 0.2s ease;
+}
+
+.studio-example-pill:hover {
+  color: #fff;
+  border-color: rgba(0, 229, 255, 0.35);
+}
+
+.studio-example-pill--active {
+  color: #fff;
+  border-color: rgba(45, 212, 191, 0.45);
+  background: rgba(45, 212, 191, 0.12);
+  box-shadow: 0 0 16px rgba(45, 212, 191, 0.18);
+}
+
+.studio-btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.125rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--background-deep), var(--background-deep)) padding-box,
+    var(--gradient-neon) border-box;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #fff;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.studio-btn-pill:hover {
+  box-shadow: 0 0 32px rgba(0, 229, 255, 0.28);
+  transform: translateY(-1px);
+}
+
+.studio-icon-btn {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: rgba(8, 8, 20, 0.6);
+  color: rgba(255, 255, 255, 0.55);
+  transition: all 0.2s ease;
+}
+
+.studio-icon-btn:hover {
+  color: #00e5ff;
+  border-color: rgba(0, 229, 255, 0.35);
+}
+
+/* Architecture canvas */
+.architecture-canvas-shell {
+  position: relative;
+}
+
+.architecture-canvas-grid {
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(5, 10, 20, 0.38), rgba(5, 10, 20, 0.38)) padding-box,
+    linear-gradient(135deg, rgba(45, 212, 191, 0.3), rgba(124, 58, 237, 0.25)) border-box;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 0 60px rgba(45, 212, 191, 0.06);
+}
+
+/* Platform icon nodes */
+.platform-icon-marker {
+  display: flex;
+  height: 3.75rem;
+  width: 3.75rem;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  background: rgba(8, 8, 22, 0.92);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: all 0.25s ease;
+}
+
+.platform-icon-marker--compact {
+  height: 2.5rem;
+  width: 2.5rem;
+  clip-path: none;
+  border-radius: 0.625rem;
+  flex-shrink: 0;
+}
+
+.platform-icon-marker--crm {
+  border-color: rgba(45, 212, 191, 0.42);
+  background: rgba(45, 212, 191, 0.1);
+}
+
+.platform-icon-marker--warehouse {
+  border-color: rgba(0, 229, 255, 0.42);
+  background: rgba(0, 229, 255, 0.1);
+}
+
+.platform-icon-marker--reverse-etl {
+  border-color: rgba(124, 58, 237, 0.42);
+  background: rgba(124, 58, 237, 0.14);
+}
+
+.platform-icon-marker--cdp {
+  border-color: rgba(99, 102, 241, 0.42);
+  background: rgba(99, 102, 241, 0.12);
+}
+
+.platform-icon-marker--engagement {
+  border-color: rgba(224, 64, 251, 0.45);
+  background: rgba(224, 64, 251, 0.12);
+}
+
+.platform-icon-marker--legacy {
+  border-color: rgba(245, 158, 11, 0.42);
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.platform-icon-marker--ai {
+  border-color: rgba(167, 139, 250, 0.48);
+  background: rgba(124, 58, 237, 0.16);
+}
+
+.platform-icon-marker--analytics {
+  border-color: rgba(52, 211, 153, 0.42);
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.platform-icon-marker--customer {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  clip-path: none;
+  border-radius: 9999px;
+}
+
+.platform-icon-marker--active {
+  border-color: rgba(0, 229, 255, 0.65);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 229, 255, 0.18) 0%,
+    rgba(124, 58, 237, 0.14) 100%
+  );
+  transform: scale(1.06);
+}
+
+.platform-node:hover .platform-icon-marker {
+  border-color: rgba(0, 229, 255, 0.35);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.platform-node__label {
+  max-width: 9rem;
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.35;
+}
+
+.platform-node__category {
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.platform-node--selected .platform-node__label {
+  color: #5eead4;
+}
+
+/* Detail panel */
+.studio-detail-panel {
+  border-left: 1px solid rgba(45, 212, 191, 0.12);
+  background: rgba(5, 10, 20, 0.92);
+  backdrop-filter: blur(24px);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.35);
+}
+
+.blueprint-section__title {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(167, 243, 208, 0.88);
+}
+
+.studio-tag {
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.studio-tag--positive {
+  border-color: rgba(45, 212, 191, 0.22);
+  background: rgba(45, 212, 191, 0.1);
+  color: rgba(167, 243, 208, 0.9);
+}
+
+.studio-tag--muted {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.studio-integration-tag {
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  background: rgba(0, 229, 255, 0.08);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  color: #67e8f9;
+}
+
+.studio-add-platform-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 8, 20, 0.45);
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.studio-add-platform-btn:hover {
+  border-color: rgba(45, 212, 191, 0.28);
+  background: rgba(45, 212, 191, 0.06);
+}
+
+.studio-remove-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  background: rgba(239, 68, 68, 0.08);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #fca5a5;
+  transition: background 0.2s ease;
+}
+
+.studio-remove-btn:hover {
+  background: rgba(239, 68, 68, 0.12);
+}

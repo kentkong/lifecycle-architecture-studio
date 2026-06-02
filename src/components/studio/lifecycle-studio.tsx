@@ -8,6 +8,7 @@ import {
   PlatformDetailPanel,
 } from "@/components/studio/platform-detail-panel";
 import { StudioHeader, TemplateBar } from "@/components/studio/studio-header";
+import { DesignAtmosphere } from "@/components/ui/design-atmosphere";
 import { architectureTemplates, buildLinearArchitecture, createStateFromTemplate } from "@/lib/templates";
 
 export function LifecycleStudio() {
@@ -69,8 +70,8 @@ export function LifecycleStudio() {
   }
 
   return (
-    <div className="min-h-screen bg-[#080a0d] text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(59,130,246,0.08),transparent_28%),radial-gradient(circle_at_85%_10%,rgba(255,255,255,0.03),transparent_24%)]" />
+    <div className="studio-app relative min-h-screen overflow-x-hidden">
+      <DesignAtmosphere />
       <StudioHeader />
       <TemplateBar
         templates={architectureTemplates}
@@ -82,17 +83,13 @@ export function LifecycleStudio() {
         }}
       />
 
-      <main className="relative px-6 py-8 md:px-10">
+      <main className="relative z-10 px-6 py-8 md:px-10">
         <div className="mx-auto max-w-[1400px]">
-          {activeTemplate ? (
-            <p className="mb-6 max-w-3xl text-sm leading-relaxed text-white/50">
-              {activeTemplate.description}
-            </p>
-          ) : (
-            <p className="mb-6 max-w-3xl text-sm leading-relaxed text-white/50">
-              Custom architecture — explore, add, or remove platforms to model your stack.
-            </p>
-          )}
+          <p className="studio-section-lead mb-8 max-w-3xl">
+            {activeTemplate
+              ? activeTemplate.description
+              : "Custom architecture — explore, add, or remove platforms to model your stack."}
+          </p>
           <ArchitectureCanvas
             nodes={state.nodes}
             connections={state.connections}
