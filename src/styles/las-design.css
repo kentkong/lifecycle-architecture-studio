@@ -218,37 +218,6 @@
   padding: 0.1rem 0;
   opacity: 0;
   animation: las-band-in 0.5s ease forwards;
-  border-left: 3px solid rgba(0, 149, 255, 0.12);
-  padding-left: 0.85rem;
-}
-
-.las-blueprint__band[data-depth="1"] { border-left-color: rgba(0, 136, 238, 0.12); }
-.las-blueprint__band[data-depth="2"] { border-left-color: rgba(0, 119, 212, 0.12); }
-.las-blueprint__band[data-depth="3"] { border-left-color: rgba(30, 90, 158, 0.14); }
-.las-blueprint__band[data-depth="4"] { border-left-color: rgba(26, 58, 110, 0.14); }
-
-.las-blueprint__band[data-lit] {
-  border-left-color: rgba(0, 149, 255, 0.38);
-}
-
-.las-blueprint__band[data-lit][data-depth="1"] { border-left-color: rgba(0, 136, 238, 0.36); }
-.las-blueprint__band[data-lit][data-depth="2"] { border-left-color: rgba(0, 119, 212, 0.34); }
-.las-blueprint__band[data-lit][data-depth="3"] { border-left-color: rgba(30, 90, 158, 0.36); }
-.las-blueprint__band[data-lit][data-depth="4"] { border-left-color: rgba(26, 58, 110, 0.38); }
-
-.las-blueprint__layer-title {
-  margin: 0 0 0.25rem;
-  font-family: var(--font-display), system-ui, sans-serif;
-  font-size: clamp(0.6875rem, 1.2vh, 0.8125rem);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: rgba(148, 163, 184, 0.6);
-  text-transform: uppercase;
-  line-height: 1.15;
-}
-
-.las-blueprint__band[data-lit] .las-blueprint__layer-title {
-  color: rgba(186, 215, 255, 0.88);
 }
 
 .las-blueprint__cards {
@@ -346,23 +315,52 @@
   transition: opacity 0.2s ease;
 }
 
+.las-platform-row__text {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  min-width: 0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .las-platform-row__name {
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: clamp(0.8125rem, 1.35vh, 0.9375rem);
   font-weight: 500;
   color: rgba(203, 213, 225, 0.82);
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: color 0.2s ease;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.las-platform-row__layer {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(0.625rem, 1.1vh, 0.75rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.55);
+  flex-shrink: 0;
+}
+
+.las-platform-row--selected .las-platform-row__name {
+  color: rgba(224, 242, 254, 0.95);
+}
+
+.las-platform-row--selected .las-platform-row__layer {
+  color: rgba(186, 215, 255, 0.75);
 }
 
 .las-platform-row:hover .las-platform-row__name {
   color: rgba(226, 232, 240, 0.92);
 }
 
-.las-platform-row--selected .las-platform-row__name {
-  color: rgba(224, 242, 254, 0.95);
+.las-platform-row:hover .las-platform-row__layer {
+  color: rgba(186, 215, 255, 0.65);
 }
 
 .las-platform-row--delay-0 { animation-delay: 0ms; }

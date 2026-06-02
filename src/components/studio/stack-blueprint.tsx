@@ -72,7 +72,6 @@ export function StackBlueprint({
               data-lit={lit || undefined}
               style={{ gridRow: layerIndex + 1, animationDelay: `${layerIndex * 80 + 150}ms` }}
             >
-              <h3 className="las-blueprint__layer-title">{layer.label}</h3>
               {layerNodes.length > 0 ? (
                 <div className="las-blueprint__cards">
                   {layerNodes.map((node, index) => {
@@ -84,6 +83,7 @@ export function StackBlueprint({
                         nodeId={node.id}
                         platformId={node.platformId}
                         name={platform.name}
+                        layerLabel={layer.label}
                         selected={selectedNodeId === node.id}
                         onClick={() => onSelectNode(node.id)}
                         index={index}
@@ -92,7 +92,7 @@ export function StackBlueprint({
                   })}
                 </div>
               ) : (
-                <p className="las-blueprint__empty">No platforms</p>
+                <p className="las-blueprint__empty">{layer.label} — No platforms</p>
               )}
             </div>
 
