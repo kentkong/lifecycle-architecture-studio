@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { Fragment, useMemo, useRef } from "react";
 import { BlueprintConnectors } from "@/components/studio/blueprint-connectors";
 import { IsometricDiamond } from "@/components/studio/isometric-diamond";
 import { PlatformLayerCard } from "@/components/studio/platform-layer-card";
@@ -63,16 +63,14 @@ export function StackBlueprint({
           animationKey={animationKey}
         />
 
-        {/* Left — platform logos & info */}
-        <div className="las-blueprint__apps">
-          {layerData.map(({ layer, nodes: layerNodes, active, lit }, layerIndex) => (
+        {layerData.map(({ layer, nodes: layerNodes, active, lit }, layerIndex) => (
+          <Fragment key={layer.id}>
             <div
-              key={layer.id}
               className="las-blueprint__band"
               data-depth={layerIndex}
               data-active={active || undefined}
               data-lit={lit || undefined}
-              style={{ animationDelay: `${layerIndex * 80 + 150}ms` }}
+              style={{ gridRow: layerIndex + 1, animationDelay: `${layerIndex * 80 + 150}ms` }}
             >
               <h3 className="las-blueprint__layer-title">{layer.label}</h3>
               {layerNodes.length > 0 ? (
@@ -97,30 +95,23 @@ export function StackBlueprint({
                 <p className="las-blueprint__empty">No platforms</p>
               )}
             </div>
-          ))}
-        </div>
 
-        {/* Right — overlapping stack */}
-        <div className="las-blueprint__stack">
-          <div className="las-blueprint__stack-inner">
-            {layerData.map(({ layer, lit }, layerIndex) => (
-              <div
-                key={layer.id}
-                className="las-blueprint__stack-tier"
-                data-connect-diamond={layerIndex}
-              >
-                <IsometricDiamond
-                  label={layer.shortLabel}
-                  active={lit}
-                  index={layerIndex}
-                  total={layerData.length}
-                  animationKey={animationKey}
-                  stacked
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+            <div
+              className="las-blueprint__stack-tier"
+              data-connect-diamond={layerIndex}
+              style={{ gridRow: layerIndex + 1 }}
+            >
+              <IsometricDiamond
+                label={layer.shortLabel}
+                active={lit}
+                index={layerIndex}
+                total={layerData.length}
+                animationKey={animationKey}
+                stacked
+              />
+            </div>
+          </Fragment>
+        ))}
       </div>
     </div>
   );

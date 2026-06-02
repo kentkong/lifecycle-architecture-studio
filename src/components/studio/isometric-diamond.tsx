@@ -33,6 +33,8 @@ export function IsometricDiamond({
         ["--iso-i" as string]: index,
       }}
     >
+      <span className="las-iso__connect" aria-hidden="true" />
+
       <svg viewBox="0 0 500 80" preserveAspectRatio="xMidYMid meet" className="las-iso__svg" aria-hidden="true">
         <g className="las-iso__slab" opacity={opacity}>
           <path d="M 398 54 L 442 16 L 452 20 L 408 58 Z" fill={colors.side} />
