@@ -10,6 +10,15 @@ type IsometricDiamondProps = {
   animationKey: string;
 };
 
+/** Top-face corners + extrusion depth (thick glass slab) */
+const TOP = "160,18 272,72 160,126 48,72";
+const TOP_INNER = "160,36 244,72 160,108 76,72";
+const LEFT_FACE = "48,72 160,126 160,168 48,114";
+const RIGHT_FACE = "160,126 272,72 272,114 160,168";
+const CIRCUIT_TOP = "M48,72 L160,18 L272,72 L160,126 Z";
+const CIRCUIT_LEFT = "M48,72 L48,114 L160,168";
+const CIRCUIT_RIGHT = "M272,72 L272,114 L160,168 L160,126";
+
 export function IsometricDiamond({
   label,
   active,
@@ -22,49 +31,38 @@ export function IsometricDiamond({
 
   return (
     <div
-      className={cn("las-iso", active && "las-iso--active", active && "las-iso--lit")}
+      className={cn("las-iso", active && "las-iso--lit")}
       style={{
-        animationDelay: `${index * 120}ms`,
+        animationDelay: `${index * 100}ms`,
         zIndex,
         ["--iso-i" as string]: index,
         ["--row-i" as string]: index,
       }}
     >
       <div className="las-iso__halo" aria-hidden="true" />
-      <div className="las-iso__beam" aria-hidden="true" />
 
-      <svg viewBox="0 0 320 148" className="las-iso__svg" aria-hidden="true">
+      <svg viewBox="0 0 320 188" className="las-iso__svg" aria-hidden="true">
         <defs>
           <linearGradient id={`top-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#67e8f9" stopOpacity="0.72" />
-            <stop offset="45%" stopColor="#38bdf8" stopOpacity="0.38" />
-            <stop offset="100%" stopColor="#6366f1" stopOpacity="0.18" />
+            <stop offset="0%" stopColor="#2dd4bf" stopOpacity="0.22" />
+            <stop offset="40%" stopColor="#38bdf8" stopOpacity="0.16" />
+            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.1" />
           </linearGradient>
           <linearGradient id={`left-${uid}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#0891b2" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#1e1b4b" stopOpacity="0.08" />
+            <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.28" />
+            <stop offset="100%" stopColor="#1e3a5f" stopOpacity="0.06" />
           </linearGradient>
           <linearGradient id={`right-${uid}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.42" />
-            <stop offset="100%" stopColor="#312e81" stopOpacity="0.06" />
+            <stop offset="0%" stopColor="#0ea5e9" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#1e1b4b" stopOpacity="0.05" />
           </linearGradient>
-          <radialGradient id={`shine-${uid}`} cx="50%" cy="30%" r="55%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.35" />
-            <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-          </radialGradient>
-          <filter id={`aura-${uid}`} x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur stdDeviation="14" result="blur" />
-            <feColorMatrix
-              in="blur"
-              type="matrix"
-              values="0 0 0 0 0.13
-                      0 0 0 0 0.83
-                      0 0 0 0 0.93
-                      0 0 0 0.65 0"
-            />
-          </filter>
-          <filter id={`glow-${uid}`} x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="6" result="blur" />
+          <linearGradient id={`circuit-${uid}`} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#2dd4bf" stopOpacity="0.9" />
+            <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.7" />
+            <stop offset="100%" stopColor="#34d399" stopOpacity="0.9" />
+          </linearGradient>
+          <filter id={`soft-${uid}`} x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -72,61 +70,86 @@ export function IsometricDiamond({
           </filter>
         </defs>
 
-        <ellipse
-          cx="160"
-          cy="74"
-          rx="130"
-          ry="48"
-          fill={`url(#top-${uid})`}
-          filter={`url(#aura-${uid})`}
-          opacity={active ? 0.85 : 0.45}
-        />
+        <g className="las-iso__slab" opacity={active ? 0.92 : 0.78}>
+          {/* Side faces — thick extrusion */}
+          <polygon points={LEFT_FACE} fill={`url(#left-${uid})`} />
+          <polygon points={RIGHT_FACE} fill={`url(#right-${uid})`} />
 
-        <g filter={`url(#glow-${uid})`} className="las-iso__body">
+          {/* Top glass face */}
           <polygon
-            points="160,14 278,68 160,122 42,68"
+            points={TOP}
             fill={`url(#top-${uid})`}
-            stroke={active ? "#a5f3fc" : "rgba(165,243,252,0.55)"}
-            strokeWidth="2"
-          />
-          <polygon
-            points="160,14 278,68 160,122 42,68"
-            fill={`url(#shine-${uid})`}
-            stroke="none"
-          />
-          <polygon
-            points="42,68 160,122 160,138 42,84"
-            fill={`url(#left-${uid})`}
-          />
-          <polygon
-            points="160,122 278,68 278,84 160,138"
-            fill={`url(#right-${uid})`}
-          />
-          <polygon
-            points="160,32 236,68 160,104 84,68"
-            fill="none"
-            stroke="rgba(255,255,255,0.22)"
+            stroke="rgba(45,212,191,0.28)"
             strokeWidth="1"
+          />
+          <polygon
+            points={TOP_INNER}
+            fill="none"
+            stroke="rgba(56,189,248,0.15)"
+            strokeWidth="0.75"
+          />
+
+          {/* Bottom edge highlight */}
+          <line
+            x1="48"
+            y1="114"
+            x2="160"
+            y2="168"
+            stroke="rgba(52,211,153,0.2)"
+            strokeWidth="0.75"
           />
           <line
             x1="160"
-            y1="14"
-            x2="160"
-            y2="138"
-            stroke="rgba(255,255,255,0.08)"
+            y1="168"
+            x2="272"
+            y2="114"
+            stroke="rgba(56,189,248,0.18)"
             strokeWidth="0.75"
           />
         </g>
 
+        {/* Circuit traces */}
+        <g className="las-iso__circuits" filter={`url(#soft-${uid})`}>
+          <path
+            d={CIRCUIT_TOP}
+            fill="none"
+            stroke={`url(#circuit-${uid})`}
+            strokeWidth="1.25"
+            strokeDasharray="5 9"
+            className="las-iso__circuit las-iso__circuit--a"
+          />
+          <path
+            d={CIRCUIT_LEFT}
+            fill="none"
+            stroke={`url(#circuit-${uid})`}
+            strokeWidth="1"
+            strokeDasharray="4 8"
+            className="las-iso__circuit las-iso__circuit--b"
+          />
+          <path
+            d={CIRCUIT_RIGHT}
+            fill="none"
+            stroke={`url(#circuit-${uid})`}
+            strokeWidth="1"
+            strokeDasharray="4 8"
+            className="las-iso__circuit las-iso__circuit--c"
+          />
+          {/* Circuit nodes */}
+          <circle cx="160" cy="18" r="2.5" fill="#2dd4bf" opacity="0.65" className="las-iso__node" />
+          <circle cx="48" cy="72" r="2" fill="#38bdf8" opacity="0.5" className="las-iso__node" />
+          <circle cx="272" cy="72" r="2" fill="#38bdf8" opacity="0.5" className="las-iso__node" />
+          <circle cx="160" cy="168" r="2.5" fill="#34d399" opacity="0.55" className="las-iso__node" />
+        </g>
+
         <text
           x="160"
-          y="72"
+          y="76"
           textAnchor="middle"
           className="las-iso__text"
-          fill={active ? "#f0fdff" : "rgba(224,242,254,0.88)"}
-          fontSize="13"
+          fill={active ? "rgba(186,230,253,0.92)" : "rgba(148,163,184,0.75)"}
+          fontSize="12"
           fontWeight="600"
-          letterSpacing="0.12em"
+          letterSpacing="0.14em"
         >
           {label.toUpperCase()}
         </text>
