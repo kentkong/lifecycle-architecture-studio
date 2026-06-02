@@ -39,41 +39,37 @@ export function StackBlueprint({
       <div className="las-blueprint__ambient" aria-hidden="true">
         <div className="las-blueprint__ambient-orb las-blueprint__ambient-orb--1" />
         <div className="las-blueprint__ambient-orb las-blueprint__ambient-orb--2" />
+        <div className="las-blueprint__ambient-orb las-blueprint__ambient-orb--3" />
         <div className="las-blueprint__rings las-blueprint__rings--top" />
         <div className="las-blueprint__rings las-blueprint__rings--bottom" />
       </div>
 
-      <div className="las-blueprint__layout">
-        <div className="las-blueprint__stack-col">
-          <div className="las-blueprint__stack-glow" aria-hidden="true" />
-          <div className="las-blueprint__stack">
-            {layerData.map(({ layer, nodes: layerNodes, active }, layerIndex) => (
+      <div className="las-blueprint__stage">
+        {layerData.map(({ layer, nodes: layerNodes, active }, layerIndex) => (
+          <div
+            className="las-blueprint__row"
+            key={layer.id}
+            data-active={active || layerNodes.length > 0 ? true : undefined}
+            style={{ ["--row-i" as string]: layerIndex }}
+          >
+            <div className="las-blueprint__row-diamond">
               <IsometricDiamond
-                key={layer.id}
                 label={layer.shortLabel}
                 active={active || layerNodes.length > 0}
                 index={layerIndex}
                 total={layerData.length}
                 animationKey={animationKey}
               />
-            ))}
-          </div>
-        </div>
+            </div>
 
-        <div className="las-blueprint__layers-col">
-          {layerData.map(({ layer, nodes: layerNodes, active }, layerIndex) => (
-            <div
-              className="las-blueprint__layer-row"
-              key={layer.id}
-              data-active={active || undefined}
-            >
+            <div className="las-blueprint__row-track">
               <div
                 className="las-blueprint__connector"
-                style={{ animationDelay: `${layerIndex * 140 + 240}ms` }}
+                style={{ animationDelay: `${layerIndex * 130 + 220}ms` }}
               />
               <div
                 className="las-blueprint__group"
-                style={{ animationDelay: `${layerIndex * 140 + 320}ms` }}
+                style={{ animationDelay: `${layerIndex * 130 + 300}ms` }}
               >
                 <h3 className="las-blueprint__layer-title">{layer.label}</h3>
                 {layerNodes.length > 0 ? (
@@ -94,12 +90,12 @@ export function StackBlueprint({
                     })}
                   </div>
                 ) : (
-                  <p className="las-blueprint__empty">No platforms in this layer</p>
+                  <p className="las-blueprint__empty">—</p>
                 )}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );

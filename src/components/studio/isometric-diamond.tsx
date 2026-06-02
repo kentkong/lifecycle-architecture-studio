@@ -27,6 +27,7 @@ export function IsometricDiamond({
         animationDelay: `${index * 120}ms`,
         zIndex,
         ["--iso-i" as string]: index,
+        ["--row-i" as string]: index,
       }}
     >
       <div className="las-iso__halo" aria-hidden="true" />

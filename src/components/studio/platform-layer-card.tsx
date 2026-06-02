@@ -34,10 +34,14 @@ export function PlatformLayerCard({
         {
           "--card-accent": brand.accent,
           "--card-glow": brand.glow,
+          animationDelay: `${index * 70 + 360}ms`,
         } as React.CSSProperties
       }
     >
-      <PlatformLogo platformId={platformId} size="sm" active={selected} tone="blueprint" />
+      <span className="las-platform-card__sheen" aria-hidden="true" />
+      <span className="las-platform-card__logo-wrap">
+        <PlatformLogo platformId={platformId} size="sm" active={selected} tone="blueprint" />
+      </span>
       <span className="las-platform-card__name">{name}</span>
     </button>
   );
