@@ -33,25 +33,22 @@ export function IsometricDiamond({
         ["--iso-i" as string]: index,
       }}
     >
-      <svg viewBox="0 0 340 72" className="las-iso__svg" aria-hidden="true">
+      <svg viewBox="0 0 500 80" preserveAspectRatio="xMidYMid meet" className="las-iso__svg" aria-hidden="true">
         <g className="las-iso__slab" opacity={opacity}>
-          {/* Right side */}
-          <path d="M 278 48 L 308 18 L 316 22 L 286 52 Z" fill={colors.side} />
-          {/* Front lip */}
-          <path d="M 28 48 L 278 48 L 270 60 L 20 60 Z" fill={colors.front} />
-          {/* Top — rounded isometric plate */}
+          <path d="M 398 54 L 442 16 L 452 20 L 408 58 Z" fill={colors.side} />
+          <path d="M 36 54 L 398 54 L 388 68 L 26 68 Z" fill={colors.front} />
           <path
-            d="M 44 12 L 304 12 Q 314 12 318 18 L 288 48 Q 284 52 278 52 L 34 52 Q 28 52 24 46 L 40 18 Q 44 12 50 12 Z"
+            d="M 52 12 L 432 12 Q 444 12 448 18 L 412 52 Q 408 56 398 56 L 44 56 Q 36 56 32 50 L 48 18 Q 52 12 58 12 Z"
             fill={colors.top}
           />
         </g>
 
         <text
-          x="64"
-          y="38"
+          x="88"
+          y="42"
           className="las-iso__text"
           fill={active ? colors.label : "rgba(255,255,255,0.5)"}
-          fontSize="11"
+          fontSize="13"
           fontWeight="500"
           letterSpacing="0.01em"
           transform="skewX(-16)"

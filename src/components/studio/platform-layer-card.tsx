@@ -40,7 +40,7 @@ export function PlatformLayerCard({
         } as React.CSSProperties
       }
     >
-      <PlatformLogo platformId={platformId} size="sm" active={selected} tone="blueprint" />
+      <PlatformLogo platformId={platformId} size="md" active={selected} tone="blueprint" />
       <span className="las-platform-row__name">{name}</span>
     </button>
   );
