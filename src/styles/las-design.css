@@ -225,25 +225,23 @@
   padding: 0.15rem 0;
   opacity: 0;
   animation: las-band-in 0.5s ease forwards;
-  border-left: 2px solid transparent;
+  border-left: 2px solid rgba(0, 149, 255, 0.12);
   padding-left: 0.75rem;
 }
 
-.las-blueprint__band[data-tone="blue"] {
-  border-left-color: rgba(56, 189, 248, 0.2);
+.las-blueprint__band[data-depth="1"] { border-left-color: rgba(0, 136, 238, 0.12); }
+.las-blueprint__band[data-depth="2"] { border-left-color: rgba(0, 119, 212, 0.12); }
+.las-blueprint__band[data-depth="3"] { border-left-color: rgba(30, 90, 158, 0.14); }
+.las-blueprint__band[data-depth="4"] { border-left-color: rgba(26, 58, 110, 0.14); }
+
+.las-blueprint__band[data-lit] {
+  border-left-color: rgba(0, 149, 255, 0.38);
 }
 
-.las-blueprint__band[data-tone="green"] {
-  border-left-color: rgba(45, 212, 191, 0.2);
-}
-
-.las-blueprint__band[data-lit][data-tone="blue"] {
-  border-left-color: rgba(56, 189, 248, 0.45);
-}
-
-.las-blueprint__band[data-lit][data-tone="green"] {
-  border-left-color: rgba(45, 212, 191, 0.45);
-}
+.las-blueprint__band[data-lit][data-depth="1"] { border-left-color: rgba(0, 136, 238, 0.36); }
+.las-blueprint__band[data-lit][data-depth="2"] { border-left-color: rgba(0, 119, 212, 0.34); }
+.las-blueprint__band[data-lit][data-depth="3"] { border-left-color: rgba(30, 90, 158, 0.36); }
+.las-blueprint__band[data-lit][data-depth="4"] { border-left-color: rgba(26, 58, 110, 0.38); }
 
 .las-blueprint__layer-title {
   margin: 0 0 0.4rem;
@@ -256,12 +254,8 @@
   line-height: 1.2;
 }
 
-.las-blueprint__band[data-lit][data-tone="blue"] .las-blueprint__layer-title {
-  color: rgba(147, 197, 253, 0.85);
-}
-
-.las-blueprint__band[data-lit][data-tone="green"] .las-blueprint__layer-title {
-  color: rgba(94, 234, 212, 0.85);
+.las-blueprint__band[data-lit] .las-blueprint__layer-title {
+  color: rgba(186, 215, 255, 0.88);
 }
 
 .las-blueprint__cards {
@@ -300,7 +294,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 260px;
+  max-width: 340px;
 }
 
 .las-blueprint__stack-tier {
@@ -308,7 +302,7 @@
 }
 
 .las-blueprint__stack-tier + .las-blueprint__stack-tier {
-  margin-top: clamp(-62px, -7vh, -46px);
+  margin-top: clamp(4px, 0.8vh, 10px);
 }
 
 .las-iso--stacked {
@@ -322,11 +316,11 @@
   max-width: none;
 }
 
-/* ── Isometric diamonds ── */
+/* ── Isometric slabs (Binmile-style) ── */
 .las-iso {
   position: relative;
   opacity: 0;
-  animation: las-iso-enter 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: las-iso-enter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   animation-delay: calc(var(--iso-i, 0) * 70ms);
   pointer-events: none;
 }
@@ -335,7 +329,6 @@
   width: 100%;
   height: auto;
   display: block;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.22));
 }
 
 .las-iso__text {
@@ -343,8 +336,8 @@
 }
 
 @keyframes las-iso-enter {
-  from { opacity: 0; transform: translateY(14px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Platform rows — minimal logo + name ── */
@@ -483,11 +476,11 @@
   }
 
   .las-blueprint__stack-inner {
-    max-width: 200px;
+    max-width: 280px;
   }
 
   .las-blueprint__stack-tier + .las-blueprint__stack-tier {
-    margin-top: -36px;
+    margin-top: 4px;
   }
 
   .las-blueprint__apps {

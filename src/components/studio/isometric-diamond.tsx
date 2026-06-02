@@ -1,26 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-
-type ToneVariant = "blue" | "green";
-
-const PALETTES: Record<
-  ToneVariant,
-  { top: string; mid: string; side: string; edge: string }
-> = {
-  blue: {
-    top: "#38bdf8",
-    mid: "#2563eb",
-    side: "#1e40af",
-    edge: "rgba(56,189,248,0.22)",
-  },
-  green: {
-    top: "#2dd4bf",
-    mid: "#14b8a6",
-    side: "#0f766e",
-    edge: "rgba(45,212,191,0.2)",
-  },
-};
+import { getStackLayerColors } from "@/lib/stack-colors";
 
 type IsometricDiamondProps = {
   label: string;
@@ -31,82 +12,49 @@ type IsometricDiamondProps = {
   stacked?: boolean;
 };
 
-const TOP = "160,16 268,70 160,124 52,70";
-const TOP_INNER = "160,34 238,70 160,106 82,70";
-const LEFT_FACE = "52,70 160,124 160,158 52,104";
-const RIGHT_FACE = "160,124 268,70 268,104 160,158";
-
+/** Rounded isometric slab — Binmile-style flat blue stack. */
 export function IsometricDiamond({
   label,
   active,
   index,
   total,
-  animationKey,
   stacked = false,
 }: IsometricDiamondProps) {
-  const uid = `${animationKey}-${index}`;
-  const variant: ToneVariant = index % 2 === 0 ? "blue" : "green";
-  const palette = PALETTES[variant];
+  const colors = getStackLayerColors(index);
   const zIndex = total - index;
-  const slabOpacity = active ? 0.52 : 0.32;
+  const opacity = active ? 1 : 0.58;
 
   return (
     <div
-      className={cn(
-        "las-iso",
-        stacked && "las-iso--stacked",
-        active && "las-iso--lit",
-        variant === "blue" ? "las-iso--blue" : "las-iso--green",
-      )}
+      className={cn("las-iso", stacked && "las-iso--stacked", active && "las-iso--lit")}
       style={{
-        animationDelay: `${index * 80}ms`,
+        animationDelay: `${index * 70}ms`,
         zIndex,
         ["--iso-i" as string]: index,
       }}
     >
-      <svg viewBox="0 0 320 172" className="las-iso__svg" aria-hidden="true">
-        <defs>
-          <linearGradient id={`top-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={palette.top} stopOpacity="0.28" />
-            <stop offset="55%" stopColor={palette.mid} stopOpacity="0.18" />
-            <stop offset="100%" stopColor={palette.side} stopOpacity="0.12" />
-          </linearGradient>
-          <linearGradient id={`left-${uid}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={palette.mid} stopOpacity="0.24" />
-            <stop offset="100%" stopColor={palette.side} stopOpacity="0.16" />
-          </linearGradient>
-          <linearGradient id={`right-${uid}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={palette.side} stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#0f172a" stopOpacity="0.28" />
-          </linearGradient>
-        </defs>
-
-        <g className="las-iso__slab" opacity={slabOpacity}>
-          <polygon points={LEFT_FACE} fill={`url(#left-${uid})`} />
-          <polygon points={RIGHT_FACE} fill={`url(#right-${uid})`} />
-          <polygon
-            points={TOP}
-            fill={`url(#top-${uid})`}
-            stroke={palette.edge}
-            strokeWidth="1"
-          />
-          <polygon
-            points={TOP_INNER}
-            fill="none"
-            stroke="rgba(255,255,255,0.06)"
-            strokeWidth="0.65"
+      <svg viewBox="0 0 340 72" className="las-iso__svg" aria-hidden="true">
+        <g className="las-iso__slab" opacity={opacity}>
+          {/* Right side */}
+          <path d="M 278 48 L 308 18 L 316 22 L 286 52 Z" fill={colors.side} />
+          {/* Front lip */}
+          <path d="M 28 48 L 278 48 L 270 60 L 20 60 Z" fill={colors.front} />
+          {/* Top — rounded isometric plate */}
+          <path
+            d="M 44 12 L 304 12 Q 314 12 318 18 L 288 48 Q 284 52 278 52 L 34 52 Q 28 52 24 46 L 40 18 Q 44 12 50 12 Z"
+            fill={colors.top}
           />
         </g>
 
         <text
-          x="160"
-          y="74"
-          textAnchor="middle"
+          x="64"
+          y="38"
           className="las-iso__text"
-          fill={active ? "rgba(255,255,255,0.72)" : "rgba(255,255,255,0.45)"}
-          fontSize="10"
-          fontWeight="600"
-          letterSpacing="0.06em"
+          fill={active ? colors.label : "rgba(255,255,255,0.5)"}
+          fontSize="11"
+          fontWeight="500"
+          letterSpacing="0.01em"
+          transform="skewX(-16)"
         >
           {label}
         </text>

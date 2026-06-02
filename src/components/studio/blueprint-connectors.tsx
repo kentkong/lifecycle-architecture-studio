@@ -1,17 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { getStackLayerColors } from "@/lib/stack-colors";
 
 export type AppConnectorSpec = {
   id: string;
   layerIndex: number;
-  tone: "blue" | "green";
   selected: boolean;
 };
 
 type ConnectorLine = {
   id: string;
-  tone: "blue" | "green";
+  layerIndex: number;
   selected: boolean;
   path: string;
   length: number;
@@ -23,17 +23,6 @@ type BlueprintConnectorsProps = {
   animationKey: string;
 };
 
-const TONE_COLORS = {
-  blue: {
-    stroke: "rgba(100, 160, 210, 0.28)",
-    strokeSelected: "rgba(125, 190, 235, 0.55)",
-  },
-  green: {
-    stroke: "rgba(90, 180, 165, 0.26)",
-    strokeSelected: "rgba(110, 205, 185, 0.52)",
-  },
-};
-
 function buildPath(x1: number, y1: number, x2: number, y2: number): string {
   const dx = x2 - x1;
   const bend = Math.min(Math.abs(dx) * 0.38, 56);
@@ -42,6 +31,11 @@ function buildPath(x1: number, y1: number, x2: number, y2: number): string {
   const c2x = x2 - bend;
   const c2y = y2;
   return `M ${x1} ${y1} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${x2} ${y2}`;
+}
+
+function strokeForLayer(layerIndex: number, selected: boolean): string {
+  const { top } = getStackLayerColors(layerIndex);
+  return selected ? top : `${top}44`;
 }
 
 export function BlueprintConnectors({
@@ -63,25 +57,25 @@ export function BlueprintConnectors({
 
     for (const app of apps) {
       const appEl = container.querySelector<HTMLElement>(`[data-connect-app="${app.id}"]`);
-      const diamond = container.querySelector<HTMLElement>(
+      const slab = container.querySelector<HTMLElement>(
         `[data-connect-diamond="${app.layerIndex}"] .las-iso__svg`,
       );
-      if (!appEl || !diamond) continue;
+      if (!appEl || !slab) continue;
 
       const appRect = appEl.getBoundingClientRect();
-      const diamondRect = diamond.getBoundingClientRect();
+      const slabRect = slab.getBoundingClientRect();
 
       const x1 = appRect.right - containerRect.left + 2;
       const y1 = appRect.top + appRect.height / 2 - containerRect.top;
-      const x2 = diamondRect.left - containerRect.left - 4;
-      const y2 = diamondRect.top + diamondRect.height / 2 - containerRect.top;
+      const x2 = slabRect.left - containerRect.left - 4;
+      const y2 = slabRect.top + slabRect.height / 2 - containerRect.top;
 
       const path = buildPath(x1, y1, x2, y2);
       const length = Math.hypot(x2 - x1, y2 - y1) * 1.12;
 
       next.push({
         id: app.id,
-        tone: app.tone,
+        layerIndex: app.layerIndex,
         selected: app.selected,
         path,
         length,
@@ -121,9 +115,7 @@ export function BlueprintConnectors({
       viewBox={`0 0 ${size.width} ${size.height}`}
       aria-hidden="true"
     >
-      {lines.map(({ id, tone, selected, path, length }, index) => {
-        const colors = TONE_COLORS[tone];
-        const stroke = selected ? colors.strokeSelected : colors.stroke;
+      {lines.map(({ id, layerIndex, selected, path, length }, index) => {
         const delay = index * 50 + 180;
 
         return (
@@ -131,7 +123,7 @@ export function BlueprintConnectors({
             key={`${animationKey}-${id}`}
             d={path}
             fill="none"
-            stroke={stroke}
+            stroke={strokeForLayer(layerIndex, selected)}
             strokeWidth={selected ? 1 : 0.75}
             strokeLinecap="round"
             strokeDasharray={`${length} ${length}`}

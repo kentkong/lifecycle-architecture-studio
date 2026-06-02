@@ -39,19 +39,13 @@ export function StackBlueprint({
   }, [nodes, selectedNodeId]);
 
   const appConnectors = useMemo(() => {
-    const items: {
-      id: string;
-      layerIndex: number;
-      tone: "blue" | "green";
-      selected: boolean;
-    }[] = [];
+    const items: { id: string; layerIndex: number; selected: boolean }[] = [];
 
     layerData.forEach(({ nodes: layerNodes }, layerIndex) => {
       layerNodes.forEach((node) => {
         items.push({
           id: node.id,
           layerIndex,
-          tone: layerIndex % 2 === 0 ? "blue" : "green",
           selected: node.id === selectedNodeId,
         });
       });
@@ -75,10 +69,9 @@ export function StackBlueprint({
             <div
               key={layer.id}
               className="las-blueprint__band"
-              data-connect-band={layerIndex}
+              data-depth={layerIndex}
               data-active={active || undefined}
               data-lit={lit || undefined}
-              data-tone={layerIndex % 2 === 0 ? "blue" : "green"}
               style={{ animationDelay: `${layerIndex * 80 + 150}ms` }}
             >
               <h3 className="las-blueprint__layer-title">{layer.label}</h3>
