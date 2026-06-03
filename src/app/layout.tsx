@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Lifecycle Architecture Studio",
   description:
-    "Explore modern AI-powered customer engagement ecosystems. An interactive architecture blueprint for martech, data, and lifecycle design.",
+    "An interactive architecture blueprint for martech, data, and lifecycle design.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
