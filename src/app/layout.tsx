@@ -24,11 +24,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <link rel="preload" as="image" href={`${basePath}/textures/hero-slate.png`} />
+        <link rel="preload" as="image" href={`${basePath}/textures/slate-stone-1920.jpg`} />
         <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
         <meta httpEquiv="Pragma" content="no-cache" />
         <meta httpEquiv="Expires" content="0" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{
+          ["--studio-texture-slate" as string]: `url('${basePath}/textures/hero-slate.png')`,
+          ["--studio-texture-slate-hd" as string]: `url('${basePath}/textures/slate-stone-1920.jpg')`,
+        }}
+      >
+        {children}
+      </body>
     </html>
   );
 }
