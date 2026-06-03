@@ -78,22 +78,6 @@ button {
   filter: drop-shadow(0 0 22px var(--layer-glow));
 }
 
-.iso-layer__logo-mark {
-  position: absolute;
-  left: 50%;
-  top: 34%;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: min(44%, 140px);
-  height: clamp(1.45rem, 4.6vw, 2rem);
-  transform: translate(-50%, -50%) skewY(-7deg) scaleY(0.88);
-  transform-origin: center center;
-  pointer-events: none;
-  filter: drop-shadow(0 2px 10px var(--layer-glow));
-}
-
 .platform-logo-tinted {
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
@@ -139,7 +123,8 @@ button {
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.38);
+  color: var(--callout-accent, rgba(255, 255, 255, 0.55));
+  opacity: 0.92;
 }
 
 .iso-callout__name {
@@ -150,7 +135,10 @@ button {
   font-size: 13px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: rgba(255, 255, 255, 0.82);
+}
+
+.iso-callout__name-text {
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .iso-callout--right .iso-callout__name {

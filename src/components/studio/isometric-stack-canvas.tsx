@@ -3,7 +3,8 @@
 import { useMemo } from "react";
 import { IsometricStackLayer } from "@/components/studio/isometric-stack-layer";
 import { PlatformLogo } from "@/components/studio/platform-logo";
-import { categoryColors, formatCategoryLabel } from "@/lib/category-colors";
+import { formatCategoryLabel } from "@/lib/category-colors";
+import { getPlatformColors } from "@/lib/platform-colors";
 import { getPlatform } from "@/lib/platforms";
 import { getCustomerNode, getStackLayerNodes } from "@/lib/stack-nodes";
 import type { StudioConnection, StudioNode } from "@/lib/types";
@@ -30,6 +31,7 @@ type LayerLayout = {
   platformName: string;
   category: string;
   lineColor: string;
+  accentColor: string;
 };
 
 function calloutSide(index: number): LayerLayout["side"] {
@@ -55,7 +57,7 @@ export function IsometricStackCanvas({
         const platform = getPlatform(node.platformId);
         if (!platform) return null;
 
-        const palette = categoryColors[platform.category];
+        const palette = getPlatformColors(node.platformId, platform.category);
 
         return {
           node,
@@ -65,6 +67,7 @@ export function IsometricStackCanvas({
           platformName: platform.name,
           category: formatCategoryLabel(platform.category),
           lineColor: palette.line,
+          accentColor: palette.fill,
         } satisfies LayerLayout;
       })
       .filter(Boolean) as LayerLayout[];
@@ -158,8 +161,7 @@ export function IsometricStackCanvas({
                   d={path.d}
                   fill="none"
                   stroke={layout.lineColor}
-                  strokeWidth="0.75"
-                  strokeOpacity="0.55"
+                  strokeWidth="1"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -170,9 +172,9 @@ export function IsometricStackCanvas({
                       : path.labelX + 4
                   }
                   cy={path.labelY}
-                  r="1.5"
-                  fill={layout.lineColor}
-                  opacity="0.7"
+                  r="2"
+                  fill={layout.accentColor}
+                  opacity="0.95"
                 />
               </g>
             );
@@ -183,17 +185,16 @@ export function IsometricStackCanvas({
               <path
                 d={`M ${STACK_CENTER_X} ${axisBottom} L ${STACK_CENTER_X} ${customerLabelY - 20}`}
                 fill="none"
-                stroke={categoryColors.customer.line}
-                strokeWidth="0.75"
-                strokeOpacity="0.45"
+                stroke={getPlatformColors("customer", "customer").line}
+                strokeWidth="1"
                 strokeDasharray="4 6"
               />
               <circle
                 cx={STACK_CENTER_X}
                 cy={customerLabelY - 20}
-                r="1.5"
-                fill={categoryColors.customer.line}
-                opacity="0.6"
+                r="2"
+                fill={getPlatformColors("customer", "customer").fill}
+                opacity="0.85"
               />
             </g>
           ) : null}
@@ -248,6 +249,7 @@ export function IsometricStackCanvas({
                 ...(layout.side === "right"
                   ? { right: pctX(44), left: "auto" }
                   : { left: pctX(44), right: "auto" }),
+                ["--callout-accent" as string]: layout.accentColor,
               }}
             >
               <span className="iso-callout__category">{layout.category}</span>
@@ -259,7 +261,7 @@ export function IsometricStackCanvas({
                   size="sm"
                   className="iso-callout__logo"
                 />
-                {layout.platformName}
+                <span className="iso-callout__name-text">{layout.platformName}</span>
               </span>
             </button>
           );
@@ -277,6 +279,7 @@ export function IsometricStackCanvas({
               top: pctY(customerLabelY - 10),
               left: "50%",
               transform: "translateX(-50%)",
+              ["--callout-accent" as string]: getPlatformColors("customer", "customer").fill,
             }}
           >
             <span className="iso-callout__category">customer</span>
@@ -288,7 +291,7 @@ export function IsometricStackCanvas({
                 size="sm"
                 className="iso-callout__logo"
               />
-              {customerPlatform.name}
+              <span className="iso-callout__name-text">{customerPlatform.name}</span>
             </span>
           </button>
         ) : null}

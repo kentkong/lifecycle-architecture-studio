@@ -1,5 +1,5 @@
-import { categoryColors } from "@/lib/category-colors";
 import { getPlatformLogoScale, getPlatformLogoSrc } from "@/lib/platform-logos";
+import { getPlatformColors } from "@/lib/platform-colors";
 import type { PlatformCategory } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -30,8 +30,8 @@ export function PlatformLogo({
 
   const scale = getPlatformLogoScale(platformId);
 
-  if (variant === "tinted" && category) {
-    const palette = categoryColors[category];
+  if (variant === "tinted") {
+    const palette = getPlatformColors(platformId, category);
 
     return (
       <span
@@ -41,7 +41,7 @@ export function PlatformLogo({
           backgroundColor: palette.fill,
           WebkitMaskImage: `url("${src}")`,
           maskImage: `url("${src}")`,
-          filter: `drop-shadow(0 0 8px ${palette.glow})`,
+          filter: `drop-shadow(0 0 6px ${palette.glow})`,
           transform: size === "layer" ? `scale(${scale})` : undefined,
         }}
       />
