@@ -1,26 +1,35 @@
 "use client";
 
 import { Layers3 } from "lucide-react";
+import { basePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
 export function StudioHeader() {
   return (
-    <header className="relative z-20 border-b border-white/6 px-6 py-5 md:px-10">
-      <div className="mx-auto flex max-w-[1400px] items-start justify-between gap-6">
-        <div>
-          <div className="mb-3 flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-blue-300/70">
-            <Layers3 className="h-3.5 w-3.5" />
-            Interactive architecture explorer
+    <header className="studio-hero relative z-20 overflow-hidden border-b border-white/6">
+      <div
+        className="studio-hero__texture pointer-events-none absolute inset-0"
+        style={{ backgroundImage: `url(${basePath}/hero-banner-bg.png)` }}
+        aria-hidden
+      />
+      <div className="studio-hero__scrim pointer-events-none absolute inset-0" aria-hidden />
+      <div className="relative px-6 py-5 md:px-10">
+        <div className="mx-auto flex max-w-[1400px] items-start justify-between gap-6">
+          <div>
+            <div className="mb-3 flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-blue-300/70">
+              <Layers3 className="h-3.5 w-3.5" />
+              Interactive architecture explorer
+            </div>
+            <h1 className="text-3xl font-medium tracking-[-0.03em] text-white md:text-[2.35rem]">
+              Lifecycle Architecture Studio
+            </h1>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/55 md:text-[15px]">
+              Explore modern AI-powered customer engagement ecosystems.
+            </p>
           </div>
-          <h1 className="text-3xl font-medium tracking-[-0.03em] text-white md:text-[2.35rem]">
-            Lifecycle Architecture Studio
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/55 md:text-[15px]">
-            Explore modern AI-powered customer engagement ecosystems.
-          </p>
-        </div>
-        <div className="hidden rounded-full border border-white/8 bg-white/[0.03] px-4 py-2 text-xs text-white/45 md:block">
-          ByteByteGo for Martech & AI Architecture
+          <div className="hidden rounded-full border border-white/8 bg-white/[0.03] px-4 py-2 text-xs text-white/45 md:block">
+            ByteByteGo for Martech & AI Architecture
+          </div>
         </div>
       </div>
     </header>
