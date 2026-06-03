@@ -22,10 +22,10 @@ const LAYER_GAP = 62;
 const STACK_TOP = 88;
 const STACK_CENTER_X = CANVAS_WIDTH / 2;
 const LAYER_HALF_WIDTH = 128;
-/** Connector ends with a gap before the callout card. */
-const CALLOUT_LINE_Y_OFFSET = -22;
+/** Connector horizontal segment sits above the callout block, not through labels. */
+const CALLOUT_LINE_Y_OFFSET = -42;
 const CALLOUT_LABEL_TOP_OFFSET = -30;
-const CALLOUT_LINE_END_GAP = 14;
+const CALLOUT_LINE_END_GAP = 18;
 
 type LayerLayout = {
   node: StudioNode;

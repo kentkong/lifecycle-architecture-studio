@@ -189,13 +189,14 @@ button {
 
 .iso-callout {
   border: none;
-  background: rgba(8, 10, 13, 0.78);
+  background: rgba(8, 10, 13, 0.96);
   padding: 0.2rem 0.45rem;
   border-radius: 0.3rem;
   cursor: pointer;
   font: inherit;
   color: inherit;
-  z-index: 5;
+  z-index: 10;
+  isolation: isolate;
 }
 
 .iso-callout--right {
