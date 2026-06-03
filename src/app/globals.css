@@ -89,7 +89,7 @@ button {
 
 .iso-callout__logo {
   flex-shrink: 0;
-  filter: drop-shadow(0 0 6px var(--layer-glow, rgba(255, 255, 255, 0.15)));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.35));
 }
 
 .iso-layer--ghost {

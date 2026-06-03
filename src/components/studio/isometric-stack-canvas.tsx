@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { IsometricStackLayer } from "@/components/studio/isometric-stack-layer";
+import { PlatformLogo } from "@/components/studio/platform-logo";
 import { formatCategoryLabel } from "@/lib/category-colors";
 import { getPlatformColors } from "@/lib/platform-colors";
 import { getPlatform } from "@/lib/platforms";
@@ -256,6 +257,13 @@ export function IsometricStackCanvas({
             >
               <span className="iso-callout__category">{layout.category}</span>
               <span className="iso-callout__name">
+                <PlatformLogo
+                  platformId={layout.node.platformId}
+                  category={platform.category}
+                  variant="brand"
+                  size="sm"
+                  className="iso-callout__logo"
+                />
                 <span className="iso-callout__name-text">{layout.platformName}</span>
               </span>
             </button>
@@ -279,6 +287,13 @@ export function IsometricStackCanvas({
           >
             <span className="iso-callout__category">customer</span>
             <span className="iso-callout__name">
+              <PlatformLogo
+                platformId={customerNode.platformId}
+                category="customer"
+                variant="brand"
+                size="sm"
+                className="iso-callout__logo"
+              />
               <span className="iso-callout__name-text">{customerPlatform.name}</span>
             </span>
           </button>
