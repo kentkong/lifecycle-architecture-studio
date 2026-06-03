@@ -7,10 +7,8 @@ import {
   getSelectedPlatform,
   PlatformDetailPanel,
 } from "@/components/studio/platform-detail-panel";
-import { StudioArchitecturePanel } from "@/components/studio/studio-architecture-panel";
-import { StudioHeader, TemplateBar } from "@/components/studio/studio-header";
+import { StudioFlowLabel, StudioHeader, TemplateBar } from "@/components/studio/studio-header";
 import { StudioHeroBanner } from "@/components/studio/studio-hero-banner";
-import { StudioStackFlow } from "@/components/studio/studio-stack-flow";
 import { architectureTemplates, buildLinearArchitecture, createStateFromTemplate } from "@/lib/templates";
 
 export function LifecycleStudio() {
@@ -25,9 +23,6 @@ export function LifecycleStudio() {
   );
 
   const activeTemplate = architectureTemplates.find((template) => template.id === state.templateId);
-  const flowLabel =
-    activeTemplate?.description ??
-    "Custom architecture — explore, add, or remove platforms to model your stack.";
 
   function selectTemplate(templateId: string) {
     setState(createStateFromTemplate(templateId));
@@ -83,25 +78,21 @@ export function LifecycleStudio() {
           activeTemplateId={state.templateId === "custom" ? "" : state.templateId}
           onSelect={selectTemplate}
         />
+        {activeTemplate ? (
+          <StudioFlowLabel label={activeTemplate.description} />
+        ) : (
+          <StudioFlowLabel label="Custom architecture — explore, add, or remove platforms to model your stack." />
+        )}
       </StudioHeroBanner>
 
       <main className="relative px-6 py-6 md:px-10">
         <div className="mx-auto max-w-[980px]">
-          <StudioArchitecturePanel>
-            <StudioStackFlow
-              nodes={state.nodes}
-              connections={state.connections}
-              selectedNodeId={state.selectedNodeId}
-              onSelectNode={selectNode}
-              label={flowLabel}
-            />
-            <ArchitectureCanvas
-              nodes={state.nodes}
-              connections={state.connections}
-              selectedNodeId={state.selectedNodeId}
-              onSelectNode={selectNode}
-            />
-          </StudioArchitecturePanel>
+          <ArchitectureCanvas
+            nodes={state.nodes}
+            connections={state.connections}
+            selectedNodeId={state.selectedNodeId}
+            onSelectNode={selectNode}
+          />
         </div>
       </main>
 
