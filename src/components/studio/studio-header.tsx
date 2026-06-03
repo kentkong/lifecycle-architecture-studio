@@ -29,9 +29,7 @@ export function StudioHeader() {
         <div>
           <div className="flex items-center gap-2.5">
             <StudioLogoMark />
-            <h1 className="text-2xl font-medium tracking-[-0.03em] text-white md:text-[2rem]">
-              Lifecycle Architecture Studio
-            </h1>
+            <h1 className="studio-title">Lifecycle Architecture Studio</h1>
           </div>
           <p className={cn(studioEyebrowClass, "mt-2")}>Interactive architecture explorer</p>
         </div>
