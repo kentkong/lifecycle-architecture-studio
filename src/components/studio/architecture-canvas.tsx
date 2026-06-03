@@ -12,12 +12,14 @@ type ArchitectureCanvasProps = {
 
 export function ArchitectureCanvas({
   nodes,
+  connections,
   selectedNodeId,
   onSelectNode,
 }: ArchitectureCanvasProps) {
   return (
     <IsometricStackCanvas
       nodes={nodes}
+      connections={connections}
       selectedNodeId={selectedNodeId}
       onSelectNode={onSelectNode}
     />

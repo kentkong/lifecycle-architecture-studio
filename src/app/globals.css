@@ -44,11 +44,18 @@ button {
 }
 
 .iso-canvas__stage {
-  padding: 2rem 0 3rem;
+  padding: 1.5rem 0 2.5rem;
+}
+
+.iso-canvas__stack-wrap {
+  width: min(360px, 86vw);
 }
 
 .iso-canvas__stack {
-  width: min(240px, 58vw);
+  width: 100%;
+  transform: perspective(900px) rotateX(-18deg) scale(1.06);
+  transform-origin: center 46%;
+  transform-style: preserve-3d;
 }
 
 .iso-canvas__glow {
