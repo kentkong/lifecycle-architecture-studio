@@ -10,14 +10,16 @@ export const studioTemplateLabelClass = "studio-template-label";
 export const studioEyebrowClass = cn(studioLabelClass, "text-blue-300/70");
 
 function StudioLogoMark({ className }: { className?: string }) {
+  const maskUrl = `url('${basePath}/studio-logo.svg')`;
+
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={`${basePath}/studio-logo.svg`}
-      alt=""
+    <span
       aria-hidden
-      className={cn("h-7 w-7 shrink-0", className)}
-      draggable={false}
+      className={cn("studio-logo", className)}
+      style={{
+        WebkitMaskImage: maskUrl,
+        maskImage: maskUrl,
+      }}
     />
   );
 }
@@ -27,7 +29,7 @@ export function StudioHeader() {
     <header className="relative z-10 px-0 py-4 md:py-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3">
             <StudioLogoMark />
             <h1 className="studio-title">Lifecycle Architecture Studio</h1>
           </div>

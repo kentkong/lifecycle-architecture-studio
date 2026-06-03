@@ -61,6 +61,35 @@ button {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 
+.studio-logo {
+  display: inline-block;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex-shrink: 0;
+  background-image: linear-gradient(
+    105deg,
+    #ffffff 0%,
+    #dbeafe 12%,
+    #93c5fd 24%,
+    #ffffff 38%,
+    #60a5fa 52%,
+    #ffffff 66%,
+    #bfdbfe 80%,
+    #3b82f6 92%,
+    #ffffff 100%
+  );
+  background-size: 240% 100%;
+  background-position: 0% 50%;
+  animation: studio-gradient-pulse 14s ease-in-out infinite;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  filter: drop-shadow(0 0 14px rgba(96, 165, 250, 0.28));
+}
+
 .studio-title {
   margin: 0;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
@@ -88,16 +117,21 @@ button {
   color: transparent;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 24px rgba(0, 0, 0, 0.35));
-  animation: studio-title-pulse 14s ease-in-out infinite;
+  animation: studio-gradient-pulse 14s ease-in-out infinite;
 }
 
 @media (min-width: 768px) {
+  .studio-logo {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
   .studio-title {
     font-size: 2rem;
   }
 }
 
-@keyframes studio-title-pulse {
+@keyframes studio-gradient-pulse {
   0%,
   100% {
     background-position: 0% 50%;
@@ -109,6 +143,7 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .studio-logo,
   .studio-title {
     animation: none;
     background-position: 40% 50%;
