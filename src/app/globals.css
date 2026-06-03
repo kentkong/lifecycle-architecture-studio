@@ -70,32 +70,15 @@ button {
   display: none;
 }
 
-.studio-template-pill {
+.studio-template-link {
   min-height: 0;
   height: auto;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  line-height: 1.5;
-  text-transform: uppercase;
-  border-color: rgba(59, 130, 246, 0.18);
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.16) 0%,
-    rgba(59, 130, 246, 0.06) 55%,
-    rgba(59, 130, 246, 0) 100%
-  );
-}
-
-.studio-template-pill--active {
-  border-color: rgba(96, 165, 250, 0.42);
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.32) 0%,
-    rgba(59, 130, 246, 0.12) 60%,
-    rgba(59, 130, 246, 0.02) 100%
-  );
-  box-shadow: 0 0 18px rgba(59, 130, 246, 0.14);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
 }
 
 .studio-canvas-card {
