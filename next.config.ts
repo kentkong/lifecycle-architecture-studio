@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   basePath,
   assetPrefix: `${basePath}/`,
   trailingSlash: true,
+  generateBuildId: async () => `las-${Date.now()}`,
   images: {
     unoptimized: true,
   },

@@ -32,6 +32,7 @@ export function IsometricStackLayer({
       type="button"
       onClick={onClick}
       aria-label={platformName}
+      data-platform={platformId}
       className={cn(
         "iso-layer group relative block w-full shrink-0 transition-transform duration-300",
         "hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25",
