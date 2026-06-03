@@ -37,18 +37,15 @@ button {
 }
 
 .studio-hero__texture {
-  background-size: cover;
-  background-position: center 35%;
-  background-repeat: no-repeat;
-  opacity: 0.14;
-  mix-blend-mode: soft-light;
-  filter: grayscale(1) contrast(1.05);
+  opacity: 0.38;
+  filter: grayscale(0.15) contrast(1.08) brightness(0.92);
+  mix-blend-mode: screen;
 }
 
 .studio-hero__scrim {
   background:
-    linear-gradient(180deg, rgba(8, 10, 13, 0.55) 0%, rgba(8, 10, 13, 0.92) 72%, rgba(8, 10, 13, 1) 100%),
-    radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.06), transparent 58%);
+    linear-gradient(180deg, rgba(8, 10, 13, 0.35) 0%, rgba(8, 10, 13, 0.78) 55%, rgba(8, 10, 13, 0.96) 100%),
+    radial-gradient(ellipse at 50% -10%, rgba(59, 130, 246, 0.1), transparent 52%);
 }
 
 .iso-canvas__grid {
