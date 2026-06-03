@@ -54,11 +54,6 @@ button {
     radial-gradient(ellipse 70% 50% at 50% 0%, rgba(59, 130, 246, 0.06), transparent 60%);
 }
 
-.studio-hero__tagline {
-  color: #93c5fd;
-  text-shadow: 0 0 24px rgba(59, 130, 246, 0.22);
-}
-
 .studio-template-row {
   scrollbar-width: none;
 }

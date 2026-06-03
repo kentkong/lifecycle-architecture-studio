@@ -1,0 +1,23 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M16 26L5 19.5V12.5L16 6L27 12.5V19.5L16 26Z" stroke="url(#las-stroke)" stroke-width="1.1" fill="url(#las-fill-1)"/>
+  <path d="M16 20.5L8.5 15.75V11.25L16 6.5L23.5 11.25V15.75L16 20.5Z" stroke="url(#las-stroke)" stroke-width="1.05" fill="url(#las-fill-2)"/>
+  <path d="M16 15L12 12.5V9.5L16 7L20 9.5V12.5L16 15Z" stroke="#BFDBFE" stroke-width="1" fill="url(#las-fill-3)"/>
+  <defs>
+    <linearGradient id="las-stroke" x1="5" y1="6" x2="27" y2="26" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#93C5FD"/>
+      <stop offset="1" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="las-fill-1" x1="16" y1="6" x2="16" y2="26" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0.28"/>
+    </linearGradient>
+    <linearGradient id="las-fill-2" x1="16" y1="6.5" x2="16" y2="20.5" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60A5FA" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0.38"/>
+    </linearGradient>
+    <linearGradient id="las-fill-3" x1="16" y1="7" x2="16" y2="15" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#93C5FD" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+</svg>

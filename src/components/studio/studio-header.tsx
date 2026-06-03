@@ -1,10 +1,28 @@
 "use client";
 
 import { Layers3 } from "lucide-react";
+import { basePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
-export const studioEyebrowClass =
-  "text-[10px] font-normal uppercase tracking-[0.2em] text-blue-300/70";
+export const studioLabelClass =
+  "text-[10px] font-normal uppercase tracking-[0.2em] leading-[1.5]";
+
+export const studioEyebrowClass = cn(studioLabelClass, "text-blue-300/70");
+
+export const studioEyebrowWhiteClass = cn(studioLabelClass, "text-white");
+
+function StudioLogoMark({ className }: { className?: string }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`${basePath}/studio-logo.svg`}
+      alt=""
+      aria-hidden
+      className={cn("h-7 w-7 shrink-0", className)}
+      draggable={false}
+    />
+  );
+}
 
 export function StudioHeader() {
   return (
@@ -15,10 +33,13 @@ export function StudioHeader() {
             <Layers3 className="h-3 w-3 shrink-0" />
             Interactive architecture explorer
           </div>
-          <h1 className="text-2xl font-medium tracking-[-0.03em] text-white md:text-[2rem]">
-            Lifecycle Architecture Studio
-          </h1>
-          <p className="studio-hero__tagline mt-1.5 max-w-xl text-[13px] font-normal leading-snug tracking-[-0.01em] md:text-sm">
+          <div className="flex items-center gap-2.5">
+            <StudioLogoMark />
+            <h1 className="text-2xl font-medium tracking-[-0.03em] text-white md:text-[2rem]">
+              Lifecycle Architecture Studio
+            </h1>
+          </div>
+          <p className={cn(studioEyebrowWhiteClass, "mt-2 max-w-xl")}>
             Explore modern AI-powered customer engagement ecosystems.
           </p>
         </div>
@@ -39,14 +60,15 @@ type TemplateBarProps = {
 export function TemplateBar({ templates, activeTemplateId, onSelect }: TemplateBarProps) {
   return (
     <div className="relative z-10 border-t border-white/5 px-0 py-3">
-      <div className="studio-template-row flex flex-nowrap items-center gap-1.5 overflow-x-auto pb-0.5">
+      <div className="studio-template-row flex flex-nowrap items-center gap-1 overflow-x-auto pb-0.5">
         {templates.map((template) => (
           <button
             key={template.id}
             type="button"
             onClick={() => onSelect(template.id)}
             className={cn(
-              "studio-template-pill shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-normal tracking-[0.2em] transition duration-300",
+              "studio-template-pill shrink-0 rounded-full border px-2 py-0.5 transition duration-300",
+              studioLabelClass,
               activeTemplateId === template.id
                 ? "studio-template-pill--active text-white"
                 : "text-blue-200/75 hover:text-blue-100",
