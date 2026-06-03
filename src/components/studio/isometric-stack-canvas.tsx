@@ -229,6 +229,8 @@ export function IsometricStackCanvas({
         {layouts.map((layout, i) => {
           const path = calloutPaths[i];
           const selected = selectedNodeId === layout.node.id;
+          const platform = getPlatform(layout.node.platformId);
+          if (!platform) return null;
 
           return (
             <button
@@ -250,7 +252,13 @@ export function IsometricStackCanvas({
             >
               <span className="iso-callout__category">{layout.category}</span>
               <span className="iso-callout__name">
-                <PlatformLogo platformId={layout.node.platformId} size="sm" className="iso-callout__logo" />
+                <PlatformLogo
+                  platformId={layout.node.platformId}
+                  category={platform.category}
+                  variant="tinted"
+                  size="sm"
+                  className="iso-callout__logo"
+                />
                 {layout.platformName}
               </span>
             </button>
@@ -273,7 +281,13 @@ export function IsometricStackCanvas({
           >
             <span className="iso-callout__category">customer</span>
             <span className="iso-callout__name">
-              <PlatformLogo platformId={customerNode.platformId} size="sm" className="iso-callout__logo" />
+              <PlatformLogo
+                platformId={customerNode.platformId}
+                category="customer"
+                variant="tinted"
+                size="sm"
+                className="iso-callout__logo"
+              />
               {customerPlatform.name}
             </span>
           </button>

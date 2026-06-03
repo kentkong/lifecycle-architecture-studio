@@ -1,7 +1,8 @@
 "use client";
 
 import { categoryColors } from "@/lib/category-colors";
-import { getPlatformLogoScale, getPlatformLogoSrc } from "@/lib/platform-logos";
+import { PlatformLogo } from "@/components/studio/platform-logo";
+import { getPlatformLogoSrc } from "@/lib/platform-logos";
 import type { PlatformCategory } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +27,6 @@ export function IsometricStackLayer({
   const fade = 0.42 + (depth / Math.max(total - 1, 1)) * 0.38;
   const uid = `${platformId}-${depth}`;
   const logoSrc = getPlatformLogoSrc(platformId);
-  const logoScale = getPlatformLogoScale(platformId);
 
   return (
     <button
@@ -44,7 +44,6 @@ export function IsometricStackLayer({
           "--layer-edge": palette.edge,
           "--layer-glow": palette.glow,
           "--layer-fade": fade,
-          "--logo-scale": logoScale,
           zIndex: total - depth,
         } as React.CSSProperties
       }
@@ -111,8 +110,13 @@ export function IsometricStackLayer({
 
       {logoSrc ? (
         <span className="iso-layer__logo-mark" aria-hidden="true">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={logoSrc} alt="" draggable={false} className="iso-layer__logo-img" />
+          <PlatformLogo
+            platformId={platformId}
+            category={category}
+            variant="tinted"
+            size="layer"
+            className="iso-layer__logo-tinted"
+          />
         </span>
       ) : null}
     </button>
