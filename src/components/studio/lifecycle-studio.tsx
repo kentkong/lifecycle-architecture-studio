@@ -83,11 +83,9 @@ export function LifecycleStudio() {
       <main className="relative px-6 py-8 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           {activeTemplate ? (
-            <p className="mb-6 max-w-3xl text-sm leading-relaxed text-white/50">
-              {activeTemplate.description}
-            </p>
+            <p className="studio-eyebrow mb-6 max-w-3xl">{activeTemplate.description}</p>
           ) : (
-            <p className="mb-6 max-w-3xl text-sm leading-relaxed text-white/50">
+            <p className="studio-eyebrow mb-6 max-w-3xl">
               Custom architecture — explore, add, or remove platforms to model your stack.
             </p>
           )}

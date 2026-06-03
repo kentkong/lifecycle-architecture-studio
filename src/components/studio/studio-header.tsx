@@ -8,7 +8,7 @@ export function StudioHeader() {
     <header className="relative z-10 px-0 py-4 md:py-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="mb-2 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-blue-300/70">
+          <div className="studio-eyebrow mb-2 flex items-center gap-2">
             <Layers3 className="h-3 w-3" />
             Interactive architecture explorer
           </div>
