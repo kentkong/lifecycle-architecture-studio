@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { IsometricStackLayer } from "@/components/studio/isometric-stack-layer";
 import { PlatformLogo } from "@/components/studio/platform-logo";
 import { formatCategoryLabel } from "@/lib/category-colors";
@@ -48,6 +48,8 @@ export function IsometricStackCanvas({
   selectedNodeId,
   onSelectNode,
 }: IsometricStackCanvasProps) {
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+
   const stackNodes = useMemo(
     () => getStackLayerNodes(nodes, connections),
     [nodes, connections],
@@ -123,6 +125,14 @@ export function IsometricStackCanvas({
 
   const customerLabelY = axisBottom + 36;
 
+  function energizeNode(nodeId: string) {
+    setHoveredNodeId(nodeId);
+  }
+
+  function deenergizeNode(nodeId: string) {
+    setHoveredNodeId((current) => (current === nodeId ? null : current));
+  }
+
   return (
     <div className="studio-canvas-card iso-canvas relative mx-auto w-full max-w-[980px]">
       <div
@@ -158,17 +168,36 @@ export function IsometricStackCanvas({
 
           {calloutPaths.map((path, i) => {
             const layout = layouts[i];
+            const energized =
+              hoveredNodeId === path.id || selectedNodeId === path.id;
+
             return (
-              <g key={path.id}>
+              <g
+                key={path.id}
+                className={cn(energized && "iso-connector-group--active")}
+              >
                 <path
                   d={path.d}
+                  className="iso-connector-base"
                   fill="none"
                   stroke={layout.accentColor}
                   strokeWidth="1.35"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  opacity="0.92"
+                  opacity={energized ? "1" : "0.92"}
                 />
+                {energized ? (
+                  <path
+                    d={path.d}
+                    className="iso-connector-flow"
+                    fill="none"
+                    stroke={layout.lineColor}
+                    strokeWidth="1.35"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    pathLength="100"
+                  />
+                ) : null}
                 <circle
                   cx={
                     path.anchor === "end"
@@ -176,31 +205,56 @@ export function IsometricStackCanvas({
                       : path.labelX + CALLOUT_LINE_END_GAP
                   }
                   cy={path.labelAnchorY}
-                  r="2"
+                  r={energized ? "2.6" : "2"}
+                  className={cn("iso-connector-node", energized && "iso-connector-node--active")}
                   fill={layout.accentColor}
-                  opacity="0.95"
                 />
               </g>
             );
           })}
 
           {customerPlatform && customerNode && layouts.length > 0 ? (
-            <g>
-              <path
-                d={`M ${STACK_CENTER_X} ${axisBottom} L ${STACK_CENTER_X} ${customerLabelY - 20}`}
-                fill="none"
-                stroke={getPlatformColors("customer", "customer").fill}
-                strokeWidth="1.35"
-                strokeDasharray="4 6"
-              />
-              <circle
-                cx={STACK_CENTER_X}
-                cy={customerLabelY - 20}
-                r="2"
-                fill={getPlatformColors("customer", "customer").fill}
-                opacity="0.85"
-              />
-            </g>
+            (() => {
+              const customerPath = `M ${STACK_CENTER_X} ${axisBottom} L ${STACK_CENTER_X} ${customerLabelY - 20}`;
+              const customerColor = getPlatformColors("customer", "customer").fill;
+              const customerEnergized =
+                hoveredNodeId === customerNode.id || selectedNodeId === customerNode.id;
+
+              return (
+                <g className={cn(customerEnergized && "iso-connector-group--active")}>
+                  <path
+                    d={customerPath}
+                    className="iso-connector-base"
+                    fill="none"
+                    stroke={customerColor}
+                    strokeWidth="1.35"
+                    strokeDasharray="4 6"
+                    opacity={customerEnergized ? "1" : "0.85"}
+                  />
+                  {customerEnergized ? (
+                    <path
+                      d={customerPath}
+                      className="iso-connector-flow iso-connector-flow--dashed"
+                      fill="none"
+                      stroke={customerColor}
+                      strokeWidth="1.35"
+                      strokeLinecap="round"
+                      pathLength="100"
+                    />
+                  ) : null}
+                  <circle
+                    cx={STACK_CENTER_X}
+                    cy={customerLabelY - 20}
+                    r={customerEnergized ? "2.6" : "2"}
+                    className={cn(
+                      "iso-connector-node",
+                      customerEnergized && "iso-connector-node--active",
+                    )}
+                    fill={customerColor}
+                  />
+                </g>
+              );
+            })()
           ) : null}
         </svg>
 
@@ -222,9 +276,14 @@ export function IsometricStackCanvas({
                     platformName={platform.name}
                     category={platform.category}
                     selected={selectedNodeId === layout.node.id}
+                    energized={
+                      hoveredNodeId === layout.node.id || selectedNodeId === layout.node.id
+                    }
                     depth={layout.index}
                     total={layouts.length}
                     onClick={() => onSelectNode(layout.node.id)}
+                    onPointerEnter={() => energizeNode(layout.node.id)}
+                    onPointerLeave={() => deenergizeNode(layout.node.id)}
                   />
                 </div>
               );
@@ -242,6 +301,8 @@ export function IsometricStackCanvas({
               key={`label-${layout.node.id}`}
               type="button"
               onClick={() => onSelectNode(layout.node.id)}
+              onPointerEnter={() => energizeNode(layout.node.id)}
+              onPointerLeave={() => deenergizeNode(layout.node.id)}
               className={cn(
                 "iso-callout absolute max-w-[148px] text-left transition-opacity duration-300",
                 selected ? "opacity-100" : "opacity-70 hover:opacity-95",
@@ -275,6 +336,8 @@ export function IsometricStackCanvas({
           <button
             type="button"
             onClick={() => onSelectNode(customerNode.id)}
+            onPointerEnter={() => energizeNode(customerNode.id)}
+            onPointerLeave={() => deenergizeNode(customerNode.id)}
             className={cn(
               "iso-callout iso-callout--bottom absolute max-w-[200px] transition-opacity duration-300",
               selectedNodeId === customerNode.id ? "opacity-100" : "opacity-65 hover:opacity-90",

@@ -292,6 +292,101 @@ button {
   filter: drop-shadow(0 0 22px var(--layer-glow));
 }
 
+.iso-layer__current {
+  opacity: 0;
+  stroke: rgba(255, 255, 255, 0.88);
+  stroke-dasharray: 2.5 16;
+  filter: drop-shadow(0 0 3px var(--layer-line)) drop-shadow(0 0 7px rgba(255, 255, 255, 0.35));
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+}
+
+.iso-layer__current--top {
+  stroke: color-mix(in srgb, var(--layer-line) 40%, white);
+  stroke-dasharray: 2 12;
+}
+
+.iso-layer:hover .iso-layer__current,
+.iso-layer:focus-visible .iso-layer__current,
+.iso-layer--energized .iso-layer__current {
+  opacity: 1;
+  animation: iso-edge-current 1.05s linear infinite;
+}
+
+.iso-layer__current--top {
+  animation-delay: -0.4s;
+}
+
+.iso-layer:hover .iso-layer__svg,
+.iso-layer--energized .iso-layer__svg {
+  filter: drop-shadow(0 0 16px var(--layer-glow));
+}
+
+.iso-layer--selected.iso-layer--energized .iso-layer__svg,
+.iso-layer--selected:hover .iso-layer__svg {
+  filter: drop-shadow(0 0 22px var(--layer-glow));
+}
+
+.iso-connector-base {
+  transition: opacity 0.22s ease;
+}
+
+.iso-connector-flow {
+  opacity: 0.92;
+  stroke-dasharray: 3 14;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.45));
+  animation: iso-connector-current 0.95s linear infinite;
+  pointer-events: none;
+}
+
+.iso-connector-flow--dashed {
+  stroke-dasharray: 2 10;
+  animation-duration: 0.85s;
+}
+
+.iso-connector-node {
+  opacity: 0.95;
+  transition: r 0.22s ease, opacity 0.22s ease;
+}
+
+.iso-connector-node--active {
+  opacity: 1;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.55));
+}
+
+@keyframes iso-edge-current {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+
+@keyframes iso-connector-current {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -34;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iso-layer__current,
+  .iso-connector-flow {
+    animation: none;
+  }
+
+  .iso-layer:hover .iso-layer__current,
+  .iso-layer--energized .iso-layer__current {
+    opacity: 0.65;
+    stroke-dasharray: none;
+  }
+}
+
 .platform-logo-tinted {
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;

@@ -9,9 +9,12 @@ type IsometricStackLayerProps = {
   platformName: string;
   category: PlatformCategory;
   selected?: boolean;
+  energized?: boolean;
   depth: number;
   total: number;
   onClick?: () => void;
+  onPointerEnter?: () => void;
+  onPointerLeave?: () => void;
 };
 
 export function IsometricStackLayer({
@@ -19,9 +22,12 @@ export function IsometricStackLayer({
   platformName,
   category,
   selected,
+  energized,
   depth,
   total,
   onClick,
+  onPointerEnter,
+  onPointerLeave,
 }: IsometricStackLayerProps) {
   const palette = getPlatformColors(platformId, category);
   const fade = 0.5 + (depth / Math.max(total - 1, 1)) * 0.38;
@@ -31,12 +37,15 @@ export function IsometricStackLayer({
     <button
       type="button"
       onClick={onClick}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
       aria-label={platformName}
       data-platform={platformId}
       className={cn(
         "iso-layer group relative block w-full shrink-0 transition-transform duration-300",
         "hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25",
         selected && "iso-layer--selected -translate-y-1",
+        energized && "iso-layer--energized",
       )}
       style={
         {
@@ -108,6 +117,25 @@ export function IsometricStackLayer({
           stroke="rgba(255,255,255,0.28)"
           strokeWidth="0.85"
           strokeLinecap="round"
+        />
+
+        <path
+          d="M 160 16 L 284 38 L 284 50 L 160 72 L 36 50 L 36 38 Z"
+          className="iso-layer__current iso-layer__current--shell"
+          fill="none"
+          strokeWidth="1.15"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          pathLength="100"
+        />
+        <path
+          d="M 36 38 L 160 16 L 284 38 L 160 60 Z"
+          className="iso-layer__current iso-layer__current--top"
+          fill="none"
+          strokeWidth="0.95"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          pathLength="100"
         />
       </svg>
     </button>
