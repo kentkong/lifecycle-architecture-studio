@@ -213,29 +213,25 @@ button {
   border-radius: var(--studio-radius-soft);
   padding: 1.35rem 2rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.11);
-  border-top: 1px solid var(--studio-glass-border-accent);
   background: linear-gradient(145deg, rgba(14, 17, 20, 0.78), rgba(14, 17, 20, 0.62));
   backdrop-filter: blur(12px) saturate(1.05);
   -webkit-backdrop-filter: blur(12px) saturate(1.05);
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.28),
-    0 0 28px var(--studio-accent-glow),
-    inset 0 1px 0 rgba(96, 165, 250, 0.12);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
 }
 
 .studio-canvas-card::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 12%;
-  bottom: 12%;
+  top: 14%;
+  bottom: 14%;
   width: 1px;
   z-index: 1;
   background: linear-gradient(
     180deg,
     transparent,
-    var(--studio-accent-line) 28%,
-    var(--studio-accent-line) 72%,
+    var(--studio-accent-line) 25%,
+    var(--studio-accent-line) 75%,
     transparent
   );
 }
@@ -248,11 +244,10 @@ button {
   border-radius: inherit;
   background: linear-gradient(
       90deg,
-      transparent 0%,
-      rgba(59, 130, 246, 0.55) 12%,
-      rgba(147, 197, 253, 0.85) 50%,
-      rgba(59, 130, 246, 0.55) 88%,
-      transparent 100%
+      transparent,
+      rgba(96, 165, 250, 0.35) 25%,
+      rgba(96, 165, 250, 0.35) 75%,
+      transparent
     )
     top center / 100% 1px no-repeat;
 }
@@ -273,42 +268,38 @@ button {
 }
 
 .iso-canvas__glow {
-  position: absolute;
-  left: 50%;
-  bottom: -8%;
-  width: 140%;
-  height: 48%;
-  transform: translateX(-50%);
-  background: radial-gradient(
-    ellipse at center,
-    rgba(59, 130, 246, 0.14) 0%,
-    rgba(59, 130, 246, 0.08) 42%,
-    transparent 72%
-  );
-  filter: blur(18px);
+  display: none;
+}
+
+.iso-layer {
+  pointer-events: none;
+}
+
+.iso-layer__hit {
+  pointer-events: all;
+  cursor: pointer;
 }
 
 .iso-layer--selected .iso-layer__svg {
-  filter: drop-shadow(0 0 22px var(--layer-glow));
+  filter: none;
 }
 
 .iso-layer__current {
   opacity: 0;
-  stroke-dasharray: 10 28;
+  stroke-dasharray: 8 20;
   vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.75));
   transition: opacity 0.18s ease;
   pointer-events: none;
 }
 
 .iso-layer__current--top {
-  stroke-dasharray: 8 22;
+  stroke-dasharray: 6 16;
 }
 
 .iso-layer:hover .iso-layer__current,
 .iso-layer:focus-visible .iso-layer__current,
 .iso-layer--energized .iso-layer__current {
-  opacity: 1;
+  opacity: 0.95;
   animation: iso-edge-current 0.85s linear infinite;
 }
 
@@ -316,47 +307,34 @@ button {
   animation-delay: -0.35s;
 }
 
-.iso-layer:hover .iso-layer__svg,
-.iso-layer--energized .iso-layer__svg {
-  filter: drop-shadow(0 0 18px var(--layer-glow)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
-}
-
-.iso-layer--selected.iso-layer--energized .iso-layer__svg,
-.iso-layer--selected:hover .iso-layer__svg {
-  filter: drop-shadow(0 0 24px var(--layer-glow)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-}
-
 .iso-connector-base {
-  transition: opacity 0.18s ease, stroke-width 0.18s ease;
+  transition: opacity 0.18s ease;
 }
 
 .iso-connector-group--active .iso-connector-base {
-  stroke-width: 1.65;
   opacity: 1;
 }
 
 .iso-connector-flow {
-  opacity: 1;
-  stroke-dasharray: 10 22;
+  opacity: 0.88;
+  stroke-dasharray: 8 18;
   vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.85));
   animation: iso-connector-current 0.75s linear infinite;
   pointer-events: none;
 }
 
 .iso-connector-flow--dashed {
-  stroke-dasharray: 8 16;
+  stroke-dasharray: 6 14;
   animation-duration: 0.7s;
 }
 
 .iso-connector-node {
   opacity: 0.95;
-  transition: r 0.22s ease, opacity 0.22s ease;
+  transition: r 0.18s ease;
 }
 
 .iso-connector-node--active {
   opacity: 1;
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.55));
 }
 
 @keyframes iso-edge-current {

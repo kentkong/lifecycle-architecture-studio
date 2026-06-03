@@ -13,8 +13,6 @@ type IsometricStackLayerProps = {
   depth: number;
   total: number;
   onClick?: () => void;
-  onPointerEnter?: () => void;
-  onPointerLeave?: () => void;
 };
 
 export function IsometricStackLayer({
@@ -26,8 +24,6 @@ export function IsometricStackLayer({
   depth,
   total,
   onClick,
-  onPointerEnter,
-  onPointerLeave,
 }: IsometricStackLayerProps) {
   const palette = getPlatformColors(platformId, category);
   const fade = 0.5 + (depth / Math.max(total - 1, 1)) * 0.38;
@@ -37,8 +33,6 @@ export function IsometricStackLayer({
     <button
       type="button"
       onClick={onClick}
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
       aria-label={platformName}
       data-platform={platformId}
       className={cn(
@@ -95,7 +89,6 @@ export function IsometricStackLayer({
           stroke={palette.fill}
           strokeWidth="1.1"
           strokeOpacity="0.85"
-          filter={selected ? `url(#iso-glow-${uid})` : undefined}
         />
         <path
           d="M 36 38 L 36 50 L 160 72 L 160 60 Z"
@@ -123,8 +116,8 @@ export function IsometricStackLayer({
           d="M 160 16 L 284 38 L 284 50 L 160 72 L 36 50 L 36 38 Z"
           className="iso-layer__current iso-layer__current--shell"
           fill="none"
-          stroke="rgba(255,255,255,0.95)"
-          strokeWidth="1.8"
+          stroke={palette.line}
+          strokeWidth="1.15"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -133,10 +126,40 @@ export function IsometricStackLayer({
           className="iso-layer__current iso-layer__current--top"
           fill="none"
           stroke={palette.line}
-          strokeWidth="1.4"
+          strokeWidth="1"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
+
+        {depth === 0 ? (
+          <path
+            d="M 36 38 L 160 16 L 284 38 L 160 60 Z"
+            className="iso-layer__hit"
+            fill="rgba(0,0,0,0.001)"
+            stroke="transparent"
+          />
+        ) : (
+          <>
+            <path
+              d="M 36 38 L 160 16 L 284 38 L 160 60 Z"
+              className="iso-layer__hit"
+              fill="rgba(0,0,0,0.001)"
+              stroke="transparent"
+            />
+            <path
+              d="M 36 38 L 36 50 L 160 72 L 160 60 Z"
+              className="iso-layer__hit"
+              fill="rgba(0,0,0,0.001)"
+              stroke="transparent"
+            />
+            <path
+              d="M 284 38 L 284 50 L 160 72 L 160 60 Z"
+              className="iso-layer__hit"
+              fill="rgba(0,0,0,0.001)"
+              stroke="transparent"
+            />
+          </>
+        )}
       </svg>
     </button>
   );

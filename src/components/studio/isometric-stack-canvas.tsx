@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { IsometricStackLayer } from "@/components/studio/isometric-stack-layer";
 import { PlatformLogo } from "@/components/studio/platform-logo";
 import { formatCategoryLabel } from "@/lib/category-colors";
@@ -49,6 +49,7 @@ export function IsometricStackCanvas({
   onSelectNode,
 }: IsometricStackCanvasProps) {
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+  const hoverClearTimer = useRef<number>(0);
 
   const stackNodes = useMemo(
     () => getStackLayerNodes(nodes, connections),
@@ -126,11 +127,15 @@ export function IsometricStackCanvas({
   const customerLabelY = axisBottom + 36;
 
   function energizeNode(nodeId: string) {
+    window.clearTimeout(hoverClearTimer.current);
     setHoveredNodeId(nodeId);
   }
 
   function deenergizeNode(nodeId: string) {
-    setHoveredNodeId((current) => (current === nodeId ? null : current));
+    window.clearTimeout(hoverClearTimer.current);
+    hoverClearTimer.current = window.setTimeout(() => {
+      setHoveredNodeId((current) => (current === nodeId ? null : current));
+    }, 48);
   }
 
   return (
@@ -191,8 +196,8 @@ export function IsometricStackCanvas({
                     d={path.d}
                     className="iso-connector-flow"
                     fill="none"
-                    stroke="rgba(255,255,255,0.92)"
-                    strokeWidth="2"
+                    stroke={layout.lineColor}
+                    strokeWidth="1.35"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
@@ -235,8 +240,8 @@ export function IsometricStackCanvas({
                       d={customerPath}
                       className="iso-connector-flow iso-connector-flow--dashed"
                       fill="none"
-                      stroke="rgba(255,255,255,0.92)"
-                      strokeWidth="2"
+                      stroke={customerColor}
+                      strokeWidth="1.35"
                       strokeLinecap="round"
                     />
                   ) : null}
@@ -267,7 +272,12 @@ export function IsometricStackCanvas({
                 <div
                   key={layout.node.id}
                   className="iso-canvas__layer-row flex justify-center"
-                  style={{ marginTop: layout.index === 0 ? 0 : -26 }}
+                  style={{
+                    marginTop: layout.index === 0 ? 0 : -26,
+                    zIndex: layouts.length - layout.index,
+                  }}
+                  onMouseEnter={() => energizeNode(layout.node.id)}
+                  onMouseLeave={() => deenergizeNode(layout.node.id)}
                 >
                   <IsometricStackLayer
                     platformId={layout.node.platformId}
@@ -280,8 +290,6 @@ export function IsometricStackCanvas({
                     depth={layout.index}
                     total={layouts.length}
                     onClick={() => onSelectNode(layout.node.id)}
-                    onPointerEnter={() => energizeNode(layout.node.id)}
-                    onPointerLeave={() => deenergizeNode(layout.node.id)}
                   />
                 </div>
               );
