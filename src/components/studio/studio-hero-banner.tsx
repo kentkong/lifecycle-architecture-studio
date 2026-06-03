@@ -13,7 +13,7 @@ export function StudioHeroBanner({ children }: StudioHeroBannerProps) {
       <div className="studio-hero__inner relative mx-auto max-w-[980px] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`${basePath}/textures/slate-stone-1920.jpg`}
+          src={`${basePath}/textures/hero-slate.png`}
           alt=""
           aria-hidden
           className="studio-hero__texture pointer-events-none absolute inset-0 h-full w-full object-cover object-[18%_top]"

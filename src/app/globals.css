@@ -43,21 +43,32 @@ button {
 }
 
 .studio-hero__texture {
-  opacity: 0.38;
-  filter: grayscale(1) contrast(2.2) brightness(1.12);
+  opacity: 0.24;
+  filter: grayscale(1) contrast(1.9) brightness(1.05);
   mix-blend-mode: soft-light;
 }
 
 .studio-hero__scrim {
-  background:
-    linear-gradient(180deg, rgba(8, 10, 13, 0.72) 0%, rgba(8, 10, 13, 0.84) 55%, rgba(8, 10, 13, 0.92) 100%),
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(59, 130, 246, 0.08), transparent 60%);
+  background: linear-gradient(
+    180deg,
+    rgba(8, 10, 13, 0.8) 0%,
+    rgba(8, 10, 13, 0.9) 55%,
+    rgba(8, 10, 13, 0.96) 100%
+  );
 }
 
 .studio-micro-label {
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.2em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.studio-template-label {
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
   line-height: 1.5;
   text-transform: uppercase;
 }
@@ -82,11 +93,11 @@ button {
 }
 
 .studio-template-link--active {
-  text-shadow: 0 0 18px rgba(59, 130, 246, 0.28);
+  text-shadow: 0 0 16px rgba(168, 85, 247, 0.32);
 }
 
 .studio-template-separator {
-  color: rgba(147, 197, 253, 0.28);
+  color: rgba(192, 132, 252, 0.28);
 }
 
 .studio-canvas-card {
