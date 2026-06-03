@@ -7,7 +7,7 @@ import {
   getSelectedPlatform,
   PlatformDetailPanel,
 } from "@/components/studio/platform-detail-panel";
-import { StudioFlowLabel, StudioHeader, TemplateBar } from "@/components/studio/studio-header";
+import { StudioHeader, TemplateBar } from "@/components/studio/studio-header";
 import { StudioHeroBanner } from "@/components/studio/studio-hero-banner";
 import { architectureTemplates, buildLinearArchitecture, createStateFromTemplate } from "@/lib/templates";
 
@@ -78,11 +78,6 @@ export function LifecycleStudio() {
           activeTemplateId={state.templateId === "custom" ? "" : state.templateId}
           onSelect={selectTemplate}
         />
-        {activeTemplate ? (
-          <StudioFlowLabel label={activeTemplate.description} />
-        ) : (
-          <StudioFlowLabel label="Custom architecture — explore, add, or remove platforms to model your stack." />
-        )}
       </StudioHeroBanner>
 
       <main className="relative px-6 py-6 md:px-10">
@@ -92,6 +87,11 @@ export function LifecycleStudio() {
             connections={state.connections}
             selectedNodeId={state.selectedNodeId}
             onSelectNode={selectNode}
+            description={
+              activeTemplate
+                ? activeTemplate.description
+                : "Custom architecture — explore, add, or remove platforms to model your stack."
+            }
           />
         </div>
       </main>

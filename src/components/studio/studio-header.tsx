@@ -51,7 +51,7 @@ type TemplateBarProps = {
 
 export function TemplateBar({ templates, activeTemplateId, onSelect }: TemplateBarProps) {
   return (
-    <div className="relative z-10 mt-5 px-0 pb-3">
+    <div className="relative z-10 mt-5 px-0 pb-1">
       <div className="studio-template-list" role="tablist" aria-label="Architecture templates">
         {templates.map((template) => {
           const isActive = activeTemplateId === template.id;

@@ -8,6 +8,7 @@ type ArchitectureCanvasProps = {
   connections: StudioConnection[];
   selectedNodeId: string | null;
   onSelectNode: (nodeId: string) => void;
+  description?: string;
 };
 
 export function ArchitectureCanvas({
@@ -15,6 +16,7 @@ export function ArchitectureCanvas({
   connections,
   selectedNodeId,
   onSelectNode,
+  description,
 }: ArchitectureCanvasProps) {
   return (
     <IsometricStackCanvas
@@ -22,6 +24,7 @@ export function ArchitectureCanvas({
       connections={connections}
       selectedNodeId={selectedNodeId}
       onSelectNode={onSelectNode}
+      description={description}
     />
   );
 }

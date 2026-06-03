@@ -9,12 +9,14 @@ import { getPlatform } from "@/lib/platforms";
 import { getCustomerNode, getStackLayerNodes } from "@/lib/stack-nodes";
 import type { StudioConnection, StudioNode } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { studioEyebrowClass } from "@/components/studio/studio-header";
 
 type IsometricStackCanvasProps = {
   nodes: StudioNode[];
   connections: StudioConnection[];
   selectedNodeId: string | null;
   onSelectNode: (nodeId: string) => void;
+  description?: string;
 };
 
 const CANVAS_WIDTH = 920;
@@ -47,6 +49,7 @@ export function IsometricStackCanvas({
   connections,
   selectedNodeId,
   onSelectNode,
+  description,
 }: IsometricStackCanvasProps) {
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const hoverClearTimer = useRef<number>(0);
@@ -140,6 +143,11 @@ export function IsometricStackCanvas({
 
   return (
     <div className="studio-canvas-card iso-canvas relative mx-auto w-full max-w-[980px]">
+      {description ? (
+        <p className={cn(studioEyebrowClass, "relative z-[2] mb-4")}>
+          {description}
+        </p>
+      ) : null}
       <div
         className="iso-canvas__stage relative mx-auto w-full"
         style={{ height: canvasHeight, maxWidth: CANVAS_WIDTH }}
@@ -329,7 +337,7 @@ export function IsometricStackCanvas({
                   platformId={layout.node.platformId}
                   category={platform.category}
                   variant="brand"
-                  size="md"
+                  size="sm"
                   className="iso-callout__logo"
                 />
                 <span className="iso-callout__name-text">{layout.platformName}</span>
@@ -361,7 +369,7 @@ export function IsometricStackCanvas({
                 platformId={customerNode.platformId}
                 category="customer"
                 variant="brand"
-                size="md"
+                size="sm"
                 className="iso-callout__logo"
               />
               <span className="iso-callout__name-text">{customerPlatform.name}</span>
