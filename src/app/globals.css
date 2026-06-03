@@ -3,6 +3,12 @@
 :root {
   --background: #080a0d;
   --foreground: #f4f6f8;
+  --studio-accent-line: rgba(96, 165, 250, 0.45);
+  --studio-accent-glow: rgba(59, 130, 246, 0.18);
+  --studio-glass-border-accent: rgba(59, 130, 246, 0.22);
+  --studio-accent-muted: rgba(59, 130, 246, 0.1);
+  --studio-accent-fade: rgba(59, 130, 246, 0.05);
+  --studio-radius-soft: 2px;
 }
 
 @theme inline {
@@ -36,15 +42,51 @@ button {
   background-size: 48px 48px;
 }
 
-.iso-canvas__grid {
+.studio-canvas-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--studio-radius-soft);
+  border: none;
+  padding: 1.35rem 2rem 1.5rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.006));
+  backdrop-filter: blur(8px) saturate(1.08);
+  -webkit-backdrop-filter: blur(8px) saturate(1.08);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+}
+
+.studio-canvas-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
   background:
-    radial-gradient(circle at 50% 38%, rgba(59, 130, 246, 0.07), transparent 48%),
-    radial-gradient(circle at 50% 72%, rgba(139, 92, 246, 0.08), transparent 42%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 32%);
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(59, 130, 246, 0.28) 12%,
+      rgba(59, 130, 246, 0.28) 88%,
+      transparent 100%
+    )
+      top center / 100% 1px no-repeat,
+    linear-gradient(
+      180deg,
+      rgba(59, 130, 246, 0.22) 0%,
+      rgba(59, 130, 246, 0.06) 45%,
+      transparent 100%
+    )
+      left top / 1px 15% no-repeat,
+    linear-gradient(
+      180deg,
+      rgba(59, 130, 246, 0.22) 0%,
+      rgba(59, 130, 246, 0.06) 45%,
+      transparent 100%
+    )
+      right top / 1px 15% no-repeat;
 }
 
 .iso-canvas__stage {
-  padding: 1.5rem 0 2.5rem;
+  padding: 0.75rem 0 1.5rem;
 }
 
 .iso-canvas__stack-wrap {
@@ -67,8 +109,8 @@ button {
   transform: translateX(-50%);
   background: radial-gradient(
     ellipse at center,
-    rgba(96, 165, 250, 0.14) 0%,
-    rgba(139, 92, 246, 0.1) 42%,
+    rgba(59, 130, 246, 0.14) 0%,
+    rgba(59, 130, 246, 0.08) 42%,
     transparent 72%
   );
   filter: blur(18px);

@@ -8,16 +8,19 @@ type StudioHeroBannerProps = {
 };
 
 export function StudioHeroBanner({ children }: StudioHeroBannerProps) {
+  const texture = `${basePath}/textures/slate-stone-1920.jpg`;
+
   const heroStyle: CSSProperties = {
-    backgroundImage: `linear-gradient(180deg, rgba(8, 10, 13, 0.28) 0%, rgba(8, 10, 13, 0.62) 55%, rgba(8, 10, 13, 0.82) 100%), url("${basePath}/hero-banner-bg.png")`,
-    backgroundSize: "cover",
-    backgroundPosition: "center 22%",
+    backgroundColor: "#151a1f",
+    backgroundImage: `linear-gradient(180deg, rgba(14, 17, 20, 0.35) 0%, rgba(14, 17, 20, 0.92) 100%), radial-gradient(ellipse 80% 60% at 70% 10%, rgba(59, 130, 246, 0.05), transparent 55%), url("${texture}")`,
     backgroundRepeat: "no-repeat",
+    backgroundSize: "cover, cover, cover",
+    backgroundPosition: "18% top, center top, 18% top",
   };
 
   return (
     <section
-      className="studio-hero relative z-20 min-h-[200px] overflow-hidden border-b border-white/6"
+      className="studio-hero relative z-20 overflow-hidden border-b border-white/[0.07]"
       style={heroStyle}
     >
       <div className="relative">{children}</div>
