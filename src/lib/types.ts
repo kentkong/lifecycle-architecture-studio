@@ -28,7 +28,12 @@ export type ArchitectureTemplate = {
   id: string;
   name: string;
   description: string;
-  platformIds: string[];
+  /** Linear fallback when stackOrder and connections are not defined. */
+  platformIds?: string[];
+  /** Vertical stack order in the canvas (top → bottom). */
+  stackOrder?: string[];
+  /** Hub-and-spoke or branched connection graph between node ids. */
+  connections?: StudioConnection[];
 };
 
 export type StudioNode = {
