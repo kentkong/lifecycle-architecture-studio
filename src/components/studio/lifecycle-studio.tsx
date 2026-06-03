@@ -7,7 +7,7 @@ import {
   getSelectedPlatform,
   PlatformDetailPanel,
 } from "@/components/studio/platform-detail-panel";
-import { StudioHeader, TemplateBar } from "@/components/studio/studio-header";
+import { StudioFlowLabel, StudioHeader, TemplateBar } from "@/components/studio/studio-header";
 import { StudioHeroBanner } from "@/components/studio/studio-hero-banner";
 import { architectureTemplates, buildLinearArchitecture, createStateFromTemplate } from "@/lib/templates";
 
@@ -78,17 +78,15 @@ export function LifecycleStudio() {
           activeTemplateId={state.templateId === "custom" ? "" : state.templateId}
           onSelect={selectTemplate}
         />
+        {activeTemplate ? (
+          <StudioFlowLabel label={activeTemplate.description} />
+        ) : (
+          <StudioFlowLabel label="Custom architecture — explore, add, or remove platforms to model your stack." />
+        )}
       </StudioHeroBanner>
 
-      <main className="relative px-6 py-8 md:px-10">
-        <div className="mx-auto max-w-[1400px]">
-          {activeTemplate ? (
-            <p className="studio-eyebrow mb-6 max-w-3xl">{activeTemplate.description}</p>
-          ) : (
-            <p className="studio-eyebrow mb-6 max-w-3xl">
-              Custom architecture — explore, add, or remove platforms to model your stack.
-            </p>
-          )}
+      <main className="relative px-6 py-6 md:px-10">
+        <div className="mx-auto max-w-[980px]">
           <ArchitectureCanvas
             nodes={state.nodes}
             connections={state.connections}

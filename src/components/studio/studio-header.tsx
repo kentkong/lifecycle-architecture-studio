@@ -3,13 +3,16 @@
 import { Layers3 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+export const studioEyebrowClass =
+  "text-[10px] font-normal uppercase tracking-[0.2em] text-blue-300/70";
+
 export function StudioHeader() {
   return (
     <header className="relative z-10 px-0 py-4 md:py-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="studio-eyebrow mb-2 flex items-center gap-2">
-            <Layers3 className="h-3 w-3" />
+          <div className={cn(studioEyebrowClass, "mb-2 flex items-center gap-2")}>
+            <Layers3 className="h-3 w-3 shrink-0" />
             Interactive architecture explorer
           </div>
           <h1 className="text-2xl font-medium tracking-[-0.03em] text-white md:text-[2rem]">
@@ -54,5 +57,15 @@ export function TemplateBar({ templates, activeTemplateId, onSelect }: TemplateB
         ))}
       </div>
     </div>
+  );
+}
+
+type StudioFlowLabelProps = {
+  label: string;
+};
+
+export function StudioFlowLabel({ label }: StudioFlowLabelProps) {
+  return (
+    <p className={cn(studioEyebrowClass, "relative z-10 px-0 pb-4 pt-1")}>{label}</p>
   );
 }
