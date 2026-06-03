@@ -5,10 +5,10 @@ export type PlatformPalette = CategoryPalette;
 
 /** Brand-adjacent hues — one unique color per platform for shapes and connector lines. */
 const platformFills: Record<string, string> = {
-  salesforce: "#00A1E0",
-  snowflake: "#29B5E8",
+  salesforce: "#0176D3",
+  snowflake: "#22D3EE",
   hightouch: "#0D9488",
-  braze: "#EE2D24",
+  braze: "#8B5CF6",
   sfmc: "#E8883A",
   iterable: "#6D5AE6",
   segment: "#43AF79",

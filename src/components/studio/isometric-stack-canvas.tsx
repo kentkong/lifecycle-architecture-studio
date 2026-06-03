@@ -21,6 +21,9 @@ const LAYER_GAP = 62;
 const STACK_TOP = 88;
 const STACK_CENTER_X = CANVAS_WIDTH / 2;
 const LAYER_HALF_WIDTH = 128;
+/** Line connects to category row — sits above the platform name label. */
+const CALLOUT_LINE_Y_OFFSET = -14;
+const CALLOUT_LABEL_TOP_OFFSET = -20;
 
 type LayerLayout = {
   node: StudioNode;
@@ -83,28 +86,27 @@ export function IsometricStackCanvas({
     return layouts.map((layout) => {
       const layerX = STACK_CENTER_X;
       const layerY = layout.centerY + 14;
+      const labelAnchorY = layout.centerY + CALLOUT_LINE_Y_OFFSET;
 
       if (layout.side === "right") {
         const labelX = CANVAS_WIDTH - 44;
-        const labelY = layout.centerY;
         const midX = layerX + 148;
         return {
           id: layout.node.id,
-          d: `M ${layerX + LAYER_HALF_WIDTH} ${layerY} L ${midX} ${layerY} L ${midX} ${labelY} L ${labelX} ${labelY}`,
+          d: `M ${layerX + LAYER_HALF_WIDTH} ${layerY} L ${midX} ${layerY} L ${midX} ${labelAnchorY} L ${labelX - 6} ${labelAnchorY}`,
           labelX,
-          labelY,
+          labelAnchorY,
           anchor: "end" as const,
         };
       }
 
       const labelX = 44;
-      const labelY = layout.centerY;
       const midX = layerX - 148;
       return {
         id: layout.node.id,
-        d: `M ${layerX - LAYER_HALF_WIDTH} ${layerY} L ${midX} ${layerY} L ${midX} ${labelY} L ${labelX} ${labelY}`,
+        d: `M ${layerX - LAYER_HALF_WIDTH} ${layerY} L ${midX} ${layerY} L ${midX} ${labelAnchorY} L ${labelX + 6} ${labelAnchorY}`,
         labelX,
-        labelY,
+        labelAnchorY,
         anchor: "start" as const,
       };
     });
@@ -126,7 +128,7 @@ export function IsometricStackCanvas({
         style={{ height: canvasHeight, maxWidth: CANVAS_WIDTH }}
       >
         <svg
-          className="iso-canvas__lines pointer-events-none absolute inset-0 h-full w-full"
+          className="iso-canvas__lines pointer-events-none absolute inset-0 z-[1] h-full w-full"
           viewBox={`0 0 ${CANVAS_WIDTH} ${canvasHeight}`}
           preserveAspectRatio="xMidYMid meet"
           aria-hidden="true"
@@ -168,10 +170,10 @@ export function IsometricStackCanvas({
                 <circle
                   cx={
                     path.anchor === "end"
-                      ? path.labelX - 4
-                      : path.labelX + 4
+                      ? path.labelX - 6
+                      : path.labelX + 6
                   }
-                  cy={path.labelY}
+                  cy={path.labelAnchorY}
                   r="2"
                   fill={layout.accentColor}
                   opacity="0.95"
@@ -229,7 +231,6 @@ export function IsometricStackCanvas({
         </div>
 
         {layouts.map((layout, i) => {
-          const path = calloutPaths[i];
           const selected = selectedNodeId === layout.node.id;
           const platform = getPlatform(layout.node.platformId);
           if (!platform) return null;
@@ -246,7 +247,7 @@ export function IsometricStackCanvas({
                 layout.side === "left" && "iso-callout--left",
               )}
               style={{
-                top: pctY(path.labelY - 18),
+                top: pctY(layout.centerY + CALLOUT_LABEL_TOP_OFFSET),
                 ...(layout.side === "right"
                   ? { right: pctX(44), left: "auto" }
                   : { left: pctX(44), right: "auto" }),
