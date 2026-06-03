@@ -43,7 +43,7 @@ export function StudioStackFlow({
   if (flowNodes.length === 0) return null;
 
   return (
-    <div className="stack-flow relative z-10 pb-4" aria-label={label}>
+    <div className="stack-flow stack-flow--embedded relative z-10 pb-1" aria-label={label}>
       <p className="stack-flow__label">{label}</p>
       <div className="stack-flow__track">
         {flowNodes.map((node, index) => {

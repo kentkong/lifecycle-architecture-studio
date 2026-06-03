@@ -61,7 +61,7 @@ export function IsometricStackCanvas({
   const customerLabelY = axisBottom + 36;
 
   return (
-    <div className="studio-canvas-card iso-canvas relative mx-auto w-full max-w-[980px]">
+    <div className="iso-canvas relative mx-auto w-full">
       <div
         className="iso-canvas__stage relative mx-auto w-full"
         style={{ height: canvasHeight, maxWidth: CANVAS_WIDTH }}
