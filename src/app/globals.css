@@ -10,9 +10,6 @@
   --studio-accent-fade: rgba(59, 130, 246, 0.05);
   --studio-radius-soft: 2px;
   --studio-slate-base: #151a1f;
-  --studio-display-weight: 300;
-  --studio-display-tracking: -0.035em;
-  --studio-display-leading: 1.02;
 }
 
 @theme inline {
@@ -66,23 +63,23 @@ button {
 
 .studio-title {
   margin: 0;
-  font-family: var(--font-display), var(--font-geist-sans), system-ui, sans-serif;
-  font-size: clamp(1.65rem, 3.4vw, 2.15rem);
-  font-weight: var(--studio-display-weight);
-  letter-spacing: var(--studio-display-tracking);
-  line-height: var(--studio-display-leading);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
   background-image: linear-gradient(
     105deg,
-    #f8fafc 0%,
-    #93c5fd 10%,
-    #fb923c 22%,
-    #60a5fa 34%,
-    #f8fafc 46%,
-    #f97316 58%,
-    #3b82f6 70%,
-    #fdba74 82%,
-    #93c5fd 92%,
-    #f8fafc 100%
+    #ffffff 0%,
+    #f5f3ff 10%,
+    #ddd6fe 22%,
+    #ffffff 34%,
+    #c4b5fd 46%,
+    #ffffff 58%,
+    #e9d5ff 70%,
+    #a78bfa 82%,
+    #ffffff 92%,
+    #f5f3ff 100%
   );
   background-size: 240% 100%;
   background-position: 0% 50%;
@@ -92,6 +89,12 @@ button {
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 24px rgba(0, 0, 0, 0.35));
   animation: studio-title-pulse 14s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .studio-title {
+    font-size: 2rem;
+  }
 }
 
 @keyframes studio-title-pulse {
