@@ -191,11 +191,10 @@ export function IsometricStackCanvas({
                     d={path.d}
                     className="iso-connector-flow"
                     fill="none"
-                    stroke={layout.lineColor}
-                    strokeWidth="1.35"
+                    stroke="rgba(255,255,255,0.92)"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    pathLength="100"
                   />
                 ) : null}
                 <circle
@@ -236,10 +235,9 @@ export function IsometricStackCanvas({
                       d={customerPath}
                       className="iso-connector-flow iso-connector-flow--dashed"
                       fill="none"
-                      stroke={customerColor}
-                      strokeWidth="1.35"
+                      stroke="rgba(255,255,255,0.92)"
+                      strokeWidth="2"
                       strokeLinecap="round"
-                      pathLength="100"
                     />
                   ) : null}
                   <circle
@@ -258,7 +256,7 @@ export function IsometricStackCanvas({
           ) : null}
         </svg>
 
-        <div className="iso-canvas__stack-wrap absolute left-1/2 -translate-x-1/2" style={{ top: pctY(STACK_TOP - 28) }}>
+        <div className="iso-canvas__stack-wrap absolute left-1/2 z-[2] -translate-x-1/2" style={{ top: pctY(STACK_TOP - 28) }}>
           <div className="iso-canvas__stack">
             <div className="iso-canvas__glow pointer-events-none" aria-hidden="true" />
             {layouts.map((layout) => {

@@ -123,19 +123,19 @@ export function IsometricStackLayer({
           d="M 160 16 L 284 38 L 284 50 L 160 72 L 36 50 L 36 38 Z"
           className="iso-layer__current iso-layer__current--shell"
           fill="none"
-          strokeWidth="1.15"
+          stroke="rgba(255,255,255,0.95)"
+          strokeWidth="1.8"
           strokeLinecap="round"
           strokeLinejoin="round"
-          pathLength="100"
         />
         <path
           d="M 36 38 L 160 16 L 284 38 L 160 60 Z"
           className="iso-layer__current iso-layer__current--top"
           fill="none"
-          strokeWidth="0.95"
+          stroke={palette.line}
+          strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
-          pathLength="100"
         />
       </svg>
     </button>
