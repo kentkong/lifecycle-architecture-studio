@@ -3,8 +3,7 @@
 import { basePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
-export const studioLabelClass =
-  "text-[10px] font-normal uppercase tracking-[0.2em] leading-[1.5]";
+export const studioLabelClass = "studio-micro-label";
 
 export const studioEyebrowClass = cn(studioLabelClass, "text-blue-300/70");
 
@@ -65,7 +64,7 @@ export function TemplateBar({ templates, activeTemplateId, onSelect }: TemplateB
             type="button"
             onClick={() => onSelect(template.id)}
             className={cn(
-              "studio-template-pill shrink-0 rounded-full border px-2 py-0.5 transition duration-300",
+              "studio-template-pill shrink-0 rounded-full border px-1.5 py-0 transition duration-300",
               studioLabelClass,
               activeTemplateId === template.id
                 ? "studio-template-pill--active text-white"
