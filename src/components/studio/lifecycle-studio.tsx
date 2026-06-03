@@ -77,10 +77,6 @@ export function LifecycleStudio() {
           templates={architectureTemplates}
           activeTemplateId={state.templateId === "custom" ? "" : state.templateId}
           onSelect={selectTemplate}
-          onOpenLibrary={() => {
-            setState((current) => ({ ...current, selectedNodeId: null }));
-            setPanelOpen(true);
-          }}
         />
       </StudioHeroBanner>
 
