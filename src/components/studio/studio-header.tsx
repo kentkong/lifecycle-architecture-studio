@@ -75,13 +75,3 @@ export function TemplateBar({ templates, activeTemplateId, onSelect }: TemplateB
     </div>
   );
 }
-
-type StudioFlowLabelProps = {
-  label: string;
-};
-
-export function StudioFlowLabel({ label }: StudioFlowLabelProps) {
-  return (
-    <p className={cn(studioEyebrowClass, "relative z-10 px-0 pb-4 pt-1")}>{label}</p>
-  );
-}
