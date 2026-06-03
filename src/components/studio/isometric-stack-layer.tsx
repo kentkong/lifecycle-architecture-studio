@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 type IsometricStackLayerProps = {
   platformId: string;
+  platformName: string;
   category: PlatformCategory;
   selected?: boolean;
   depth: number;
@@ -15,6 +16,7 @@ type IsometricStackLayerProps = {
 
 export function IsometricStackLayer({
   platformId,
+  platformName,
   category,
   selected,
   depth,
@@ -22,13 +24,16 @@ export function IsometricStackLayer({
   onClick,
 }: IsometricStackLayerProps) {
   const palette = getPlatformColors(platformId, category);
-  const fade = 0.42 + (depth / Math.max(total - 1, 1)) * 0.38;
+  const fade = 0.5 + (depth / Math.max(total - 1, 1)) * 0.38;
   const uid = `${platformId}-${depth}`;
+  const label =
+    platformName.length > 16 ? `${platformName.slice(0, 14).trim()}…` : platformName;
 
   return (
     <button
       type="button"
       onClick={onClick}
+      aria-label={platformName}
       className={cn(
         "iso-layer group relative block w-full shrink-0 transition-transform duration-300",
         "hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/25",
@@ -53,17 +58,17 @@ export function IsometricStackLayer({
       >
         <defs>
           <linearGradient id={`iso-top-${uid}`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={palette.fill} stopOpacity={fade * 0.9} />
-            <stop offset="50%" stopColor={palette.fill} stopOpacity={fade * 0.58} />
-            <stop offset="100%" stopColor={palette.fill} stopOpacity={fade * 0.32} />
+            <stop offset="0%" stopColor={palette.fill} stopOpacity={fade * 0.95} />
+            <stop offset="50%" stopColor={palette.fill} stopOpacity={fade * 0.68} />
+            <stop offset="100%" stopColor={palette.fill} stopOpacity={fade * 0.4} />
           </linearGradient>
           <linearGradient id={`iso-left-${uid}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={palette.fill} stopOpacity={fade * 0.38} />
-            <stop offset="100%" stopColor={palette.fill} stopOpacity={fade * 0.12} />
+            <stop offset="0%" stopColor={palette.fill} stopOpacity={fade * 0.42} />
+            <stop offset="100%" stopColor={palette.fill} stopOpacity={fade * 0.14} />
           </linearGradient>
           <linearGradient id={`iso-right-${uid}`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor={palette.fill} stopOpacity={fade * 0.28} />
-            <stop offset="100%" stopColor={palette.fill} stopOpacity={fade * 0.1} />
+            <stop offset="0%" stopColor={palette.fill} stopOpacity={fade * 0.32} />
+            <stop offset="100%" stopColor={palette.fill} stopOpacity={fade * 0.12} />
           </linearGradient>
           <filter id={`iso-glow-${uid}`} x="-40%" y="-80%" width="180%" height="220%">
             <feGaussianBlur stdDeviation="8" result="blur" />
@@ -74,13 +79,14 @@ export function IsometricStackLayer({
           </filter>
         </defs>
 
-        <ellipse cx="160" cy="66" rx="118" ry="12" fill={palette.glow} opacity={selected ? 0.6 : 0.32} />
+        <ellipse cx="160" cy="66" rx="118" ry="12" fill={palette.glow} opacity={selected ? 0.65 : 0.36} />
 
         <path
           d="M 36 38 L 160 16 L 284 38 L 160 60 Z"
           fill={`url(#iso-top-${uid})`}
-          stroke={palette.edge}
-          strokeWidth="0.85"
+          stroke={palette.fill}
+          strokeWidth="1.1"
+          strokeOpacity="0.85"
           filter={selected ? `url(#iso-glow-${uid})` : undefined}
         />
         <path
@@ -88,22 +94,29 @@ export function IsometricStackLayer({
           fill={`url(#iso-left-${uid})`}
           stroke={palette.edge}
           strokeWidth="0.55"
-          strokeOpacity="0.4"
+          strokeOpacity="0.45"
         />
         <path
           d="M 284 38 L 284 50 L 160 72 L 160 60 Z"
           fill={`url(#iso-right-${uid})`}
           stroke={palette.edge}
           strokeWidth="0.55"
-          strokeOpacity="0.4"
+          strokeOpacity="0.45"
         />
-        <path
-          d="M 64 30 L 160 18 L 256 30"
-          fill="none"
-          stroke="rgba(255,255,255,0.28)"
-          strokeWidth="0.85"
-          strokeLinecap="round"
-        />
+
+        <text
+          x="160"
+          y="39"
+          textAnchor="middle"
+          fill="#ffffff"
+          fontSize="11.5"
+          fontWeight="600"
+          letterSpacing="0.02em"
+          opacity="0.92"
+          style={{ pointerEvents: "none" }}
+        >
+          {label}
+        </text>
       </svg>
     </button>
   );

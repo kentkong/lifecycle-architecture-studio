@@ -53,7 +53,7 @@ export function buildPlatformPalette(fill: string): PlatformPalette {
     fillSoft: rgba(fill, 0.38),
     edge: edgeColor(fill),
     glow: rgba(fill, 0.32),
-    line: rgba(fill, 0.82),
+    line: fill,
   };
 }
 

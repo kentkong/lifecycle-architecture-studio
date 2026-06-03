@@ -2,7 +2,6 @@
 
 import { useMemo } from "react";
 import { IsometricStackLayer } from "@/components/studio/isometric-stack-layer";
-import { PlatformLogo } from "@/components/studio/platform-logo";
 import { formatCategoryLabel } from "@/lib/category-colors";
 import { getPlatformColors } from "@/lib/platform-colors";
 import { getPlatform } from "@/lib/platforms";
@@ -160,10 +159,11 @@ export function IsometricStackCanvas({
                 <path
                   d={path.d}
                   fill="none"
-                  stroke={layout.lineColor}
-                  strokeWidth="1"
+                  stroke={layout.accentColor}
+                  strokeWidth="1.35"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  opacity="0.92"
                 />
                 <circle
                   cx={
@@ -185,8 +185,8 @@ export function IsometricStackCanvas({
               <path
                 d={`M ${STACK_CENTER_X} ${axisBottom} L ${STACK_CENTER_X} ${customerLabelY - 20}`}
                 fill="none"
-                stroke={getPlatformColors("customer", "customer").line}
-                strokeWidth="1"
+                stroke={getPlatformColors("customer", "customer").fill}
+                strokeWidth="1.35"
                 strokeDasharray="4 6"
               />
               <circle
@@ -215,6 +215,7 @@ export function IsometricStackCanvas({
                 >
                   <IsometricStackLayer
                     platformId={layout.node.platformId}
+                    platformName={platform.name}
                     category={platform.category}
                     selected={selectedNodeId === layout.node.id}
                     depth={layout.index}
@@ -254,13 +255,6 @@ export function IsometricStackCanvas({
             >
               <span className="iso-callout__category">{layout.category}</span>
               <span className="iso-callout__name">
-                <PlatformLogo
-                  platformId={layout.node.platformId}
-                  category={platform.category}
-                  variant="tinted"
-                  size="sm"
-                  className="iso-callout__logo"
-                />
                 <span className="iso-callout__name-text">{layout.platformName}</span>
               </span>
             </button>
@@ -284,13 +278,6 @@ export function IsometricStackCanvas({
           >
             <span className="iso-callout__category">customer</span>
             <span className="iso-callout__name">
-              <PlatformLogo
-                platformId={customerNode.platformId}
-                category="customer"
-                variant="tinted"
-                size="sm"
-                className="iso-callout__logo"
-              />
               <span className="iso-callout__name-text">{customerPlatform.name}</span>
             </span>
           </button>
