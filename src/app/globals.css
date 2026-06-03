@@ -3,9 +3,9 @@
 :root {
   --background: #080a0d;
   --foreground: #f4f6f8;
-  --studio-accent-line: rgba(96, 165, 250, 0.45);
-  --studio-accent-glow: rgba(59, 130, 246, 0.18);
-  --studio-glass-border-accent: rgba(59, 130, 246, 0.22);
+  --studio-accent-line: rgba(96, 165, 250, 0.55);
+  --studio-accent-glow: rgba(59, 130, 246, 0.28);
+  --studio-glass-border-accent: rgba(59, 130, 246, 0.38);
   --studio-accent-muted: rgba(59, 130, 246, 0.1);
   --studio-accent-fade: rgba(59, 130, 246, 0.05);
   --studio-radius-soft: 2px;
@@ -42,47 +42,64 @@ button {
   background-size: 48px 48px;
 }
 
+.studio-hero__texture {
+  opacity: 0.72;
+}
+
+.studio-hero__scrim {
+  background:
+    linear-gradient(180deg, rgba(8, 10, 13, 0.18) 0%, rgba(8, 10, 13, 0.58) 72%, rgba(8, 10, 13, 0.82) 100%),
+    radial-gradient(ellipse 80% 60% at 70% 0%, rgba(59, 130, 246, 0.1), transparent 55%);
+}
+
 .studio-canvas-card {
   position: relative;
   overflow: hidden;
   border-radius: var(--studio-radius-soft);
-  border: none;
   padding: 1.35rem 2rem 1.5rem;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.006));
-  backdrop-filter: blur(8px) saturate(1.08);
-  -webkit-backdrop-filter: blur(8px) saturate(1.08);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-top: 1px solid var(--studio-glass-border-accent);
+  background: linear-gradient(145deg, rgba(14, 17, 20, 0.78), rgba(14, 17, 20, 0.62));
+  backdrop-filter: blur(12px) saturate(1.05);
+  -webkit-backdrop-filter: blur(12px) saturate(1.05);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.28),
+    0 0 28px var(--studio-accent-glow),
+    inset 0 1px 0 rgba(96, 165, 250, 0.12);
 }
 
 .studio-canvas-card::before {
   content: "";
   position: absolute;
+  left: 0;
+  top: 12%;
+  bottom: 12%;
+  width: 1px;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--studio-accent-line) 28%,
+    var(--studio-accent-line) 72%,
+    transparent
+  );
+}
+
+.studio-canvas-card::after {
+  content: "";
+  position: absolute;
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  background:
-    linear-gradient(
+  background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(59, 130, 246, 0.28) 12%,
-      rgba(59, 130, 246, 0.28) 88%,
+      rgba(59, 130, 246, 0.55) 12%,
+      rgba(147, 197, 253, 0.85) 50%,
+      rgba(59, 130, 246, 0.55) 88%,
       transparent 100%
     )
-      top center / 100% 1px no-repeat,
-    linear-gradient(
-      180deg,
-      rgba(59, 130, 246, 0.22) 0%,
-      rgba(59, 130, 246, 0.06) 45%,
-      transparent 100%
-    )
-      left top / 1px 15% no-repeat,
-    linear-gradient(
-      180deg,
-      rgba(59, 130, 246, 0.22) 0%,
-      rgba(59, 130, 246, 0.06) 45%,
-      transparent 100%
-    )
-      right top / 1px 15% no-repeat;
+    top center / 100% 1px no-repeat;
 }
 
 .iso-canvas__stage {
