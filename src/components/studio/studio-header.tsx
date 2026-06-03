@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronRight } from "lucide-react";
 import { basePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
@@ -53,24 +54,34 @@ export function TemplateBar({ templates, activeTemplateId, onSelect }: TemplateB
   return (
     <div className="relative z-10 border-t border-white/5 px-0 py-3">
       <div className="studio-template-row flex flex-nowrap items-center gap-x-2 overflow-x-auto pb-0.5">
-        {templates.map((template, index) => (
-          <span key={template.id} className="flex shrink-0 items-center gap-x-2">
-            {index > 0 ? <span className={cn(studioEyebrowClass, "opacity-40")}>·</span> : null}
-            <button
-              type="button"
-              onClick={() => onSelect(template.id)}
-              className={cn(
-                studioEyebrowClass,
-                "studio-template-link transition duration-300",
-                activeTemplateId === template.id
-                  ? "text-white"
-                  : "opacity-70 hover:opacity-100",
-              )}
-            >
-              {template.name}
-            </button>
-          </span>
-        ))}
+        {templates.map((template, index) => {
+          const isActive = activeTemplateId === template.id;
+
+          return (
+            <span key={template.id} className="flex shrink-0 items-center gap-x-2">
+              {index > 0 ? (
+                <ChevronRight
+                  className="studio-template-separator h-2.5 w-2.5 shrink-0"
+                  aria-hidden
+                />
+              ) : null}
+              <button
+                type="button"
+                onClick={() => onSelect(template.id)}
+                aria-current={isActive ? "true" : undefined}
+                className={cn(
+                  studioLabelClass,
+                  "studio-template-link transition duration-300",
+                  isActive
+                    ? "studio-template-link--active text-blue-300"
+                    : "text-blue-300/45 hover:text-blue-300/70",
+                )}
+              >
+                {template.name}
+              </button>
+            </span>
+          );
+        })}
       </div>
     </div>
   );

@@ -81,6 +81,14 @@ button {
   color: inherit;
 }
 
+.studio-template-link--active {
+  text-shadow: 0 0 18px rgba(59, 130, 246, 0.28);
+}
+
+.studio-template-separator {
+  color: rgba(147, 197, 253, 0.28);
+}
+
 .studio-canvas-card {
   position: relative;
   overflow: hidden;
