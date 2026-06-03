@@ -27,10 +27,6 @@ export function IsometricStackLayer({
   const uid = `${platformId}-${depth}`;
   const logoSrc = getPlatformLogoSrc(platformId);
   const logoScale = getPlatformLogoScale(platformId);
-  const logoW = 132 * logoScale;
-  const logoH = 30 * logoScale;
-  const logoX = 160 - logoW / 2;
-  const logoY = 38 - logoH / 2 - 2;
 
   return (
     <button
@@ -48,6 +44,7 @@ export function IsometricStackLayer({
           "--layer-edge": palette.edge,
           "--layer-glow": palette.glow,
           "--layer-fade": fade,
+          "--logo-scale": logoScale,
           zIndex: total - depth,
         } as React.CSSProperties
       }
@@ -71,9 +68,6 @@ export function IsometricStackLayer({
             <stop offset="0%" stopColor={palette.fill} stopOpacity={fade * 0.28} />
             <stop offset="100%" stopColor={palette.fill} stopOpacity={fade * 0.1} />
           </linearGradient>
-          <clipPath id={`iso-face-${uid}`}>
-            <path d="M 36 38 L 160 16 L 284 38 L 160 60 Z" />
-          </clipPath>
           <filter id={`iso-glow-${uid}`} x="-40%" y="-80%" width="180%" height="220%">
             <feGaussianBlur stdDeviation="8" result="blur" />
             <feMerge>
@@ -113,22 +107,14 @@ export function IsometricStackLayer({
           strokeWidth="0.85"
           strokeLinecap="round"
         />
-
-        {logoSrc ? (
-          <g clipPath={`url(#iso-face-${uid})`}>
-            <ellipse cx="160" cy="38" rx="72" ry="18" fill="rgba(255,255,255,0.07)" />
-            <image
-              href={logoSrc}
-              x={logoX}
-              y={logoY}
-              width={logoW}
-              height={logoH}
-              preserveAspectRatio="xMidYMid meet"
-              opacity="0.94"
-            />
-          </g>
-        ) : null}
       </svg>
+
+      {logoSrc ? (
+        <span className="iso-layer__logo-mark" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoSrc} alt="" draggable={false} className="iso-layer__logo-img" />
+        </span>
+      ) : null}
     </button>
   );
 }
