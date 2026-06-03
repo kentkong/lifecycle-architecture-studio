@@ -18,7 +18,7 @@ export function StudioHeader() {
           <h1 className="text-2xl font-medium tracking-[-0.03em] text-white md:text-[2rem]">
             Lifecycle Architecture Studio
           </h1>
-          <p className="studio-hero__tagline mt-1.5 max-w-xl text-[13px] font-semibold leading-snug tracking-[-0.01em] md:text-sm">
+          <p className="studio-hero__tagline mt-1.5 max-w-xl text-[13px] font-normal leading-snug tracking-[-0.01em] md:text-sm">
             Explore modern AI-powered customer engagement ecosystems.
           </p>
         </div>
@@ -46,7 +46,7 @@ export function TemplateBar({ templates, activeTemplateId, onSelect }: TemplateB
             type="button"
             onClick={() => onSelect(template.id)}
             className={cn(
-              "studio-template-pill shrink-0 rounded-full border px-2.5 py-1 text-[11px] font-medium transition duration-300",
+              "studio-template-pill shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-normal transition duration-300",
               activeTemplateId === template.id
                 ? "studio-template-pill--active text-white"
                 : "text-blue-200/75 hover:text-blue-100",
