@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { basePath } from "@/lib/base-path";
 
 type StudioHeroBannerProps = {
@@ -8,17 +8,18 @@ type StudioHeroBannerProps = {
 };
 
 export function StudioHeroBanner({ children }: StudioHeroBannerProps) {
+  const heroStyle: CSSProperties = {
+    backgroundImage: `linear-gradient(180deg, rgba(8, 10, 13, 0.28) 0%, rgba(8, 10, 13, 0.62) 55%, rgba(8, 10, 13, 0.82) 100%), url("${basePath}/hero-banner-bg.png")`,
+    backgroundSize: "cover",
+    backgroundPosition: "center 22%",
+    backgroundRepeat: "no-repeat",
+  };
+
   return (
-    <section className="studio-hero relative z-20 overflow-hidden border-b border-white/6">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={`${basePath}/hero-banner-bg.png`}
-        alt=""
-        aria-hidden
-        className="studio-hero__texture pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_35%]"
-        draggable={false}
-      />
-      <div className="studio-hero__scrim pointer-events-none absolute inset-0" aria-hidden />
+    <section
+      className="studio-hero relative z-20 min-h-[200px] overflow-hidden border-b border-white/6"
+      style={heroStyle}
+    >
       <div className="relative">{children}</div>
     </section>
   );

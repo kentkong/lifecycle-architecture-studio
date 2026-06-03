@@ -36,18 +36,6 @@ button {
   background-size: 48px 48px;
 }
 
-.studio-hero__texture {
-  opacity: 0.38;
-  filter: grayscale(0.15) contrast(1.08) brightness(0.92);
-  mix-blend-mode: screen;
-}
-
-.studio-hero__scrim {
-  background:
-    linear-gradient(180deg, rgba(8, 10, 13, 0.35) 0%, rgba(8, 10, 13, 0.78) 55%, rgba(8, 10, 13, 0.96) 100%),
-    radial-gradient(ellipse at 50% -10%, rgba(59, 130, 246, 0.1), transparent 52%);
-}
-
 .iso-canvas__grid {
   background:
     radial-gradient(circle at 50% 38%, rgba(59, 130, 246, 0.07), transparent 48%),
