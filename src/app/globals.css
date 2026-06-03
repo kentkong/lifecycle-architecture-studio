@@ -113,12 +113,24 @@ button {
 }
 
 .iso-callout__name {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   margin-top: 0.15rem;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: -0.01em;
   color: rgba(255, 255, 255, 0.82);
+}
+
+.iso-callout--right .iso-callout__name {
+  justify-content: flex-end;
+}
+
+.iso-callout__logo {
+  flex-shrink: 0;
+  opacity: 0.92;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.35));
 }
 
 .connection-flow {
