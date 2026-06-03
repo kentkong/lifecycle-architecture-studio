@@ -12,7 +12,7 @@ import { StudioHeroBanner } from "@/components/studio/studio-hero-banner";
 import { architectureTemplates, buildLinearArchitecture, createStateFromTemplate } from "@/lib/templates";
 
 export function LifecycleStudio() {
-  const [state, setState] = useState(() => createStateFromTemplate("enterprise-marketing"));
+  const [state, setState] = useState(() => createStateFromTemplate("modern-composable"));
   const [panelOpen, setPanelOpen] = useState(false);
 
   const selectedPlatform = getSelectedPlatform(state.selectedNodeId);

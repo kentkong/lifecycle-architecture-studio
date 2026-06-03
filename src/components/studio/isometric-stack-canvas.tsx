@@ -3,7 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import { IsometricStackLayer } from "@/components/studio/isometric-stack-layer";
 import { PlatformLogo } from "@/components/studio/platform-logo";
-import { formatCategoryLabel } from "@/lib/category-colors";
+import { getCategoryLabel } from "@/lib/category-colors";
 import { getPlatformColors } from "@/lib/platform-colors";
 import { getPlatform } from "@/lib/platforms";
 import { getCustomerNode, getStackLayerNodes } from "@/lib/stack-nodes";
@@ -72,7 +72,7 @@ export function IsometricStackCanvas({
           centerY: STACK_TOP + index * LAYER_GAP,
           side: calloutSide(index),
           platformName: platform.name,
-          category: formatCategoryLabel(platform.category),
+          category: getCategoryLabel(platform),
           lineColor: palette.line,
           accentColor: palette.fill,
         } satisfies LayerLayout;

@@ -2,28 +2,45 @@ import type { ArchitectureTemplate, StudioConnection, StudioNode } from "./types
 
 export const architectureTemplates: ArchitectureTemplate[] = [
   {
-    id: "enterprise-marketing",
-    name: "Enterprise Marketing Stack",
-    description: "CRM → warehouse → reverse ETL → modern engagement → customer.",
-    platformIds: ["salesforce", "snowflake", "hightouch", "braze", "customer"],
+    id: "legacy-enterprise",
+    name: "Legacy Enterprise Marketing Stack",
+    description:
+      "Traditional enterprise architecture commonly used by large organizations running Salesforce Marketing Cloud as a centralized marketing platform.",
+    platformIds: ["salesforce", "sfmc", "email-sms", "customer"],
   },
   {
-    id: "legacy-enterprise",
-    name: "Legacy Enterprise Stack",
-    description: "Salesforce-native marketing automation without warehouse activation.",
-    platformIds: ["salesforce", "sfmc", "customer"],
+    id: "modern-composable",
+    name: "Modern Composable Customer Engagement Stack",
+    description:
+      "Modern warehouse-centric architecture increasingly adopted by enterprise marketing and customer success teams.",
+    platformIds: ["salesforce", "snowflake", "hightouch", "braze", "customer"],
   },
   {
     id: "ai-powered-lifecycle",
     name: "AI-Powered Lifecycle Stack",
-    description: "Modern stack with AI-assisted content and journey intelligence.",
-    platformIds: ["salesforce", "snowflake", "hightouch", "braze", "openai", "customer"],
+    description:
+      "Modern AI-enabled customer engagement architecture focused on personalization and intelligent automation.",
+    platformIds: ["salesforce", "snowflake", "hightouch", "braze", "ai-services", "customer"],
   },
   {
-    id: "cdp-analytics",
-    name: "CDP & Analytics Stack",
-    description: "Event collection, analytics, and engagement orchestration.",
-    platformIds: ["segment", "snowflake", "mixpanel", "braze", "customer"],
+    id: "product-led-growth",
+    name: "Product-Led Growth Stack",
+    description: "Common architecture for SaaS companies relying heavily on product usage data.",
+    platformIds: ["product-events", "segment", "snowflake", "braze", "customer"],
+  },
+  {
+    id: "enterprise-cdp",
+    name: "Enterprise Customer Data Platform",
+    description: "Multi-source customer intelligence architecture used by large enterprises.",
+    platformIds: [
+      "crm-data",
+      "product-data",
+      "support-data",
+      "financial-data",
+      "snowflake",
+      "hightouch",
+      "braze",
+    ],
   },
 ];
 
@@ -47,7 +64,7 @@ export function buildLinearArchitecture(platformIds: string[]): {
 export function getTemplate(id: string): ArchitectureTemplate {
   return (
     architectureTemplates.find((template) => template.id === id) ??
-    architectureTemplates[0]
+    architectureTemplates[1]
   );
 }
 

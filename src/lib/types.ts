@@ -13,6 +13,7 @@ export type Platform = {
   id: string;
   name: string;
   category: PlatformCategory;
+  categoryLabel?: string;
   purpose: string;
   capabilities: string[];
   strengths: string[];

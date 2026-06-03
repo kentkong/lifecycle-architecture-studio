@@ -1,4 +1,16 @@
-import type { PlatformCategory } from "./types";
+import type { Platform, PlatformCategory } from "./types";
+
+const categoryLabels: Record<PlatformCategory, string> = {
+  crm: "CRM",
+  warehouse: "Data Warehouse",
+  "reverse-etl": "Data Activation",
+  cdp: "Customer Data Collection",
+  engagement: "Customer Engagement",
+  "legacy-engagement": "Marketing Automation",
+  ai: "AI Services",
+  analytics: "Analytics",
+  customer: "Customer",
+};
 
 export type CategoryPalette = {
   fill: string;
@@ -75,5 +87,9 @@ export const categoryColors: Record<PlatformCategory, CategoryPalette> = {
 };
 
 export function formatCategoryLabel(category: PlatformCategory) {
-  return category.replace("-", " ");
+  return categoryLabels[category] ?? category.replace("-", " ");
+}
+
+export function getCategoryLabel(platform: Pick<Platform, "category" | "categoryLabel">) {
+  return platform.categoryLabel ?? formatCategoryLabel(platform.category);
 }
