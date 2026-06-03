@@ -66,38 +66,52 @@ button {
 }
 
 .studio-template-label {
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 400;
-  letter-spacing: 0.18em;
-  line-height: 1.5;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
   text-transform: uppercase;
 }
 
-.studio-template-row {
-  scrollbar-width: none;
+.studio-template-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.studio-template-row::-webkit-scrollbar {
-  display: none;
-}
-
-.studio-template-link {
-  min-height: 0;
-  height: auto;
-  padding: 0;
-  border: 0;
-  background: none;
+.studio-template-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-height: 1.85rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: var(--studio-radius-soft);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.034), rgba(255, 255, 255, 0.008));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(176, 186, 196, 0.72);
   cursor: pointer;
-  font: inherit;
-  color: inherit;
+  text-align: center;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.studio-template-link--active {
-  text-shadow: 0 0 16px rgba(168, 85, 247, 0.32);
+.studio-template-tag:hover {
+  border-color: rgba(168, 85, 247, 0.28);
+  background: rgba(168, 85, 247, 0.08);
+  color: rgba(216, 180, 254, 0.82);
 }
 
-.studio-template-separator {
-  color: rgba(192, 132, 252, 0.28);
+.studio-template-tag--active {
+  border-color: rgba(168, 85, 247, 0.38);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.07));
+  color: #d8b4fe;
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.12);
 }
 
 .studio-canvas-card {

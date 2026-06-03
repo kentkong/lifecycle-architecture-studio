@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
 import { basePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
@@ -53,33 +52,25 @@ type TemplateBarProps = {
 export function TemplateBar({ templates, activeTemplateId, onSelect }: TemplateBarProps) {
   return (
     <div className="relative z-10 mt-5 px-0 pb-3">
-      <div className="studio-template-row flex flex-nowrap items-center gap-x-2 overflow-x-auto pb-0.5">
-        {templates.map((template, index) => {
+      <div className="studio-template-list" role="tablist" aria-label="Architecture templates">
+        {templates.map((template) => {
           const isActive = activeTemplateId === template.id;
 
           return (
-            <span key={template.id} className="flex shrink-0 items-center gap-x-2">
-              {index > 0 ? (
-                <ChevronRight
-                  className="studio-template-separator h-2 w-2 shrink-0"
-                  aria-hidden
-                />
-              ) : null}
-              <button
-                type="button"
-                onClick={() => onSelect(template.id)}
-                aria-current={isActive ? "true" : undefined}
-                className={cn(
-                  studioTemplateLabelClass,
-                  "studio-template-link transition duration-300",
-                  isActive
-                    ? "studio-template-link--active text-purple-300"
-                    : "text-purple-300/40 hover:text-purple-300/65",
-                )}
-              >
-                {template.name}
-              </button>
-            </span>
+            <button
+              key={template.id}
+              type="button"
+              role="tab"
+              onClick={() => onSelect(template.id)}
+              aria-selected={isActive}
+              className={cn(
+                studioTemplateLabelClass,
+                "studio-template-tag",
+                isActive && "studio-template-tag--active",
+              )}
+            >
+              {template.name}
+            </button>
           );
         })}
       </div>
