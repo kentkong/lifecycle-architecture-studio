@@ -26,8 +26,6 @@ export function IsometricStackLayer({
   const palette = getPlatformColors(platformId, category);
   const fade = 0.5 + (depth / Math.max(total - 1, 1)) * 0.38;
   const uid = `${platformId}-${depth}`;
-  const label =
-    platformName.length > 16 ? `${platformName.slice(0, 14).trim()}…` : platformName;
 
   return (
     <button
@@ -103,20 +101,13 @@ export function IsometricStackLayer({
           strokeWidth="0.55"
           strokeOpacity="0.45"
         />
-
-        <text
-          x="160"
-          y="39"
-          textAnchor="middle"
-          fill="#ffffff"
-          fontSize="11.5"
-          fontWeight="600"
-          letterSpacing="0.02em"
-          opacity="0.92"
-          style={{ pointerEvents: "none" }}
-        >
-          {label}
-        </text>
+        <path
+          d="M 64 30 L 160 18 L 256 30"
+          fill="none"
+          stroke="rgba(255,255,255,0.28)"
+          strokeWidth="0.85"
+          strokeLinecap="round"
+        />
       </svg>
     </button>
   );

@@ -89,7 +89,10 @@ button {
 
 .iso-callout__logo {
   flex-shrink: 0;
-  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.35));
+  padding: 0.12rem;
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
 }
 
 .iso-layer--ghost {
@@ -127,13 +130,14 @@ button {
   text-transform: uppercase;
   color: var(--callout-accent, rgba(255, 255, 255, 0.55));
   opacity: 0.92;
+  margin-bottom: 0.2rem;
+  line-height: 1.2;
 }
 
 .iso-callout__name {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.15rem;
+  gap: 0.5rem;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: -0.01em;

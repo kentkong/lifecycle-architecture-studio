@@ -22,9 +22,10 @@ const LAYER_GAP = 62;
 const STACK_TOP = 88;
 const STACK_CENTER_X = CANVAS_WIDTH / 2;
 const LAYER_HALF_WIDTH = 128;
-/** Line connects to category row — sits above the platform name label. */
-const CALLOUT_LINE_Y_OFFSET = -14;
-const CALLOUT_LABEL_TOP_OFFSET = -20;
+/** Connector ends with a gap before the callout card. */
+const CALLOUT_LINE_Y_OFFSET = -22;
+const CALLOUT_LABEL_TOP_OFFSET = -30;
+const CALLOUT_LINE_END_GAP = 14;
 
 type LayerLayout = {
   node: StudioNode;
@@ -92,9 +93,10 @@ export function IsometricStackCanvas({
       if (layout.side === "right") {
         const labelX = CANVAS_WIDTH - 44;
         const midX = layerX + 148;
+        const lineEndX = labelX - CALLOUT_LINE_END_GAP;
         return {
           id: layout.node.id,
-          d: `M ${layerX + LAYER_HALF_WIDTH} ${layerY} L ${midX} ${layerY} L ${midX} ${labelAnchorY} L ${labelX - 6} ${labelAnchorY}`,
+          d: `M ${layerX + LAYER_HALF_WIDTH} ${layerY} L ${midX} ${layerY} L ${midX} ${labelAnchorY} L ${lineEndX} ${labelAnchorY}`,
           labelX,
           labelAnchorY,
           anchor: "end" as const,
@@ -103,9 +105,10 @@ export function IsometricStackCanvas({
 
       const labelX = 44;
       const midX = layerX - 148;
+      const lineEndX = labelX + CALLOUT_LINE_END_GAP;
       return {
         id: layout.node.id,
-        d: `M ${layerX - LAYER_HALF_WIDTH} ${layerY} L ${midX} ${layerY} L ${midX} ${labelAnchorY} L ${labelX + 6} ${labelAnchorY}`,
+        d: `M ${layerX - LAYER_HALF_WIDTH} ${layerY} L ${midX} ${layerY} L ${midX} ${labelAnchorY} L ${lineEndX} ${labelAnchorY}`,
         labelX,
         labelAnchorY,
         anchor: "start" as const,
@@ -171,8 +174,8 @@ export function IsometricStackCanvas({
                 <circle
                   cx={
                     path.anchor === "end"
-                      ? path.labelX - 6
-                      : path.labelX + 6
+                      ? path.labelX - CALLOUT_LINE_END_GAP
+                      : path.labelX + CALLOUT_LINE_END_GAP
                   }
                   cy={path.labelAnchorY}
                   r="2"
@@ -261,7 +264,7 @@ export function IsometricStackCanvas({
                   platformId={layout.node.platformId}
                   category={platform.category}
                   variant="brand"
-                  size="sm"
+                  size="md"
                   className="iso-callout__logo"
                 />
                 <span className="iso-callout__name-text">{layout.platformName}</span>
@@ -291,7 +294,7 @@ export function IsometricStackCanvas({
                 platformId={customerNode.platformId}
                 category="customer"
                 variant="brand"
-                size="sm"
+                size="md"
                 className="iso-callout__logo"
               />
               <span className="iso-callout__name-text">{customerPlatform.name}</span>
