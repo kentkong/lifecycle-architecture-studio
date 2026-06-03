@@ -46,7 +46,7 @@ export function TemplateBar({ templates, activeTemplateId, onSelect }: TemplateB
             type="button"
             onClick={() => onSelect(template.id)}
             className={cn(
-              "studio-template-pill shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-normal transition duration-300",
+              "studio-template-pill shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-normal tracking-[0.2em] transition duration-300",
               activeTemplateId === template.id
                 ? "studio-template-pill--active text-white"
                 : "text-blue-200/75 hover:text-blue-100",
