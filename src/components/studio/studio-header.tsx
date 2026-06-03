@@ -1,6 +1,5 @@
 "use client";
 
-import { Layers3 } from "lucide-react";
 import { basePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
@@ -29,8 +28,7 @@ export function StudioHeader() {
     <header className="relative z-10 px-0 py-4 md:py-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className={cn(studioEyebrowClass, "mb-2 flex items-center gap-2")}>
-            <Layers3 className="h-3 w-3 shrink-0" />
+          <div className={cn(studioEyebrowClass, "mb-2")}>
             Interactive architecture explorer
           </div>
           <div className="flex items-center gap-2.5">
